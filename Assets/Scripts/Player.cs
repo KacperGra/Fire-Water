@@ -9,11 +9,11 @@ public class Player : MonoBehaviour
     private Vector2 movementInput;
     public string playerName;
 
-
     [Header(header: "Movement")]
     private string horizontalMoveName;
     private string vericalMoveName;
     public float moveSpeed;
+    public Transform otherPlayer;
 
     void Start()
     {
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));
+        
 
         Animate();
     }

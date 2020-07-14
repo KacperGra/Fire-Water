@@ -4,12 +4,38 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    public Player player;
-    private Vector3 playerPosition;
+    private const int numberOfPlayers = 2;
+    
+    private Transform[] player = new Transform[numberOfPlayers];
+
+    private void Start()
+    {
+        Player[] players = FindObjectsOfType<Player>();
+        for(int i = 0; i < numberOfPlayers; ++i)
+        {
+            player[i] = players[i].transform;
+        }       
+    }
 
     void Update()
     {
-        playerPosition = player.transform.position;
-        transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+        Vector3 center = Vector3.Lerp(player[0].position, player[1].position, 0.5f);
+
+        if(center.y <= 4.58f && center.y >= -3.37f)
+        {
+            transform.position = new Vector3(transform.position.x, center.y, transform.position.z);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        }
+        if(center.x <= 11f && center.x >= -9.6f)
+        {
+            transform.position = new Vector3(center.x, transform.position.y, transform.position.z);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        } 
     }
 }
