@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     public string playerName;
 
     [Header(header: "Movement")]
+
+    // Variables used to separate a movement for both players
     private string horizontalMoveName;
     private string vericalMoveName;
+
     public float moveSpeed;
-    public Transform otherPlayer;
 
     void Start()
     {
@@ -23,8 +25,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));
-        
+        movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));   
 
         Animate();
     }

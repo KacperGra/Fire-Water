@@ -6,11 +6,11 @@ public class Camera : MonoBehaviour
 {
     private const int numberOfPlayers = 2;
     
-    private Transform[] player = new Transform[numberOfPlayers];
+    private readonly Transform[] player = new Transform[numberOfPlayers];
 
     private void Start()
     {
-        Player[] players = FindObjectsOfType<Player>();
+        var players = FindObjectsOfType<Player>();
         for(int i = 0; i < numberOfPlayers; ++i)
         {
             player[i] = players[i].transform;
@@ -19,7 +19,7 @@ public class Camera : MonoBehaviour
 
     void Update()
     {
-        Vector3 center = Vector3.Lerp(player[0].position, player[1].position, 0.5f);
+        var center = Vector3.Lerp(player[0].position, player[1].position, 0.5f);
 
         if(center.y <= 4.58f && center.y >= -3.37f)
         {
