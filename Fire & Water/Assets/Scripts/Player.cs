@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
 
     public float moveSpeed;
 
+    [Header(header: "Shooting")]
+    private KeyCode shootKey;
+    public Sprite shootImage;
+    public Transform shootPoint;
+    public GameObject bulletPrefab;
+
     void Start()
     {
         Init();
@@ -25,6 +31,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));   
 
         Animate();
@@ -41,12 +48,26 @@ public class Player : MonoBehaviour
         {
             horizontalMoveName = "P1_Horizontal";
             vericalMoveName = "P1_Vertical";
+            shootKey = KeyCode.G;
         }
         else if (playerName == "Water")
         {
             horizontalMoveName = "P2_Horizontal";
             vericalMoveName = "P2_Vertical";
         }
+    }
+
+    void PlayerInput()
+    {
+        if(Input.GetKeyDown(shootKey))
+        {
+            Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        }
+    }
+
+    void Shoot()
+    {
+
     }
 
     private void Animate()
@@ -73,6 +94,4 @@ public class Player : MonoBehaviour
         }
 
     }
-
-
 }
