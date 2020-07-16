@@ -96,9 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa991e6e181cc4f4fb01818bcf196cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 15
   rigidbody: {fileID: 5031940986235756551}
   image: {fileID: 0}
+  particles: {fileID: 959860881312349806, guid: ef5c8518c7da58a408b13af6d6012af1,
+    type: 3}
+  timeToSpawnEffect: 0.05
 --- !u!50 &5031940986235756551
 Rigidbody2D:
   serializedVersion: 4
