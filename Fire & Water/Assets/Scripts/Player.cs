@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
-        shootBar.setMaxTime(timeToShoot);
+        shootBar.SetMaxTime(timeToShoot);
         Init();
         animator = GetComponent<Animator>();   
     }
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         currentTimeToShoot += Time.deltaTime;
-        shootBar.setTime(currentTimeToShoot);
+        shootBar.SetTime(currentTimeToShoot);
         PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));   
 

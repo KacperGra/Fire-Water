@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public int health;
+    [HideInInspector]
+    public new Rigidbody2D rigidbody;
+
     private const int numberOfPlayers = 2;
     [Header(header: "Movement")]
+    public int health;
     public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
 
@@ -20,6 +23,7 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+
         var players = FindObjectsOfType<Player>();
         for(int i = 0; i < numberOfPlayers; ++i)
         {
@@ -48,6 +52,8 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        rigidbody.velocity *= new Vector2(0.99f, 0.99f);
+
         if(direction.x < 0)
         {
             transform.rotation = new Quaternion(0f, 0f, 0f, 0f);

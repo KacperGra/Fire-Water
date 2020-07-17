@@ -9,7 +9,7 @@ public class ShootBar : MonoBehaviour
     public Gradient gradient;
     public Image fill;
 
-    public void setMaxTime(float _value)
+    public void SetMaxTime(float _value)
     {
         slider.maxValue = _value;
         slider.value = slider.maxValue;
@@ -17,7 +17,7 @@ public class ShootBar : MonoBehaviour
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void setTime(float _value)
+    public void SetTime(float _value)
     {
         slider.value = _value;
 
