@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
+    public int health;
     private const int numberOfPlayers = 2;
     [Header(header: "Movement")]
     public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
 
-    public bool isWaterElemental = false, isFireElemental = false;
+    [HideInInspector]
+    public string elementalName;
     public GameObject elementalShadow;
+    public GameObject explosionParticles;
     
     private Vector2 direction;
 
     private void Start()
     {
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
         var players = FindObjectsOfType<Player>();
         for(int i = 0; i < numberOfPlayers; ++i)
         {
@@ -31,11 +35,11 @@ public class Monster : MonoBehaviour
         {
             case 0:
                 elementalShadow.GetComponent<SpriteRenderer>().color = waterColor;
-                isWaterElemental = true;
+                elementalName = "Water";
                 break;
             case 1:
                 elementalShadow.GetComponent<SpriteRenderer>().color = fireColor;
-                isFireElemental = true;
+                elementalName = "Fire";
                 break;
             default:
                 break;
@@ -44,12 +48,31 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        if(direction.x < 0)
+        {
+            transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
+        else if (direction.x > 0)
+        {
+            transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+        }
+
         SelectCloserTarget();
     }
 
     private void FixedUpdate()
     {
         transform.position += new Vector3(direction.x * -moveSpeed * Time.fixedDeltaTime, direction.y * -moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void TakeDamage(int _damage)
+    {
+        health -= _damage;
+        if(health <= 0)
+        {
+            Instantiate(explosionParticles, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 
     void SelectCloserTarget()
