@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -19,23 +20,26 @@ public class Player : MonoBehaviour
 
     [Header(header: "Shooting")]
     private KeyCode shootKey;
-    public Sprite shootImage;
     public Transform shootPoint;
     public GameObject bulletPrefab;
+    public ShootBar shootBar;
 
-    bool isShooting; // Variable for holding shoot button and then shoot
-
-    // public float timeBetweenShoot; IDEA
-    // private float currentTime;
+    bool isShooting = false; // Variable for holding shoot button and then shoot
+    private readonly float timeToShoot = 1.2f;
+    private float currentTimeToShoot;
 
     void Start()
     {
+        currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
+        shootBar.setMaxTime(timeToShoot);
         Init();
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();   
     }
 
     void Update()
     {
+        currentTimeToShoot += Time.deltaTime;
+        shootBar.setTime(currentTimeToShoot);
         PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));   
 
@@ -64,11 +68,13 @@ public class Player : MonoBehaviour
     }
 
     void PlayerInput()
-    {
-        if (Input.GetKeyDown(shootKey))
+    {       
+        if(currentTimeToShoot > timeToShoot)
         {
-            isShooting = true;
-            
+            if (Input.GetKeyDown(shootKey) && isShooting.Equals(false))
+            {
+                isShooting = true;
+            }
         }
         if(Input.GetKeyUp(shootKey))
         {
@@ -76,6 +82,7 @@ public class Player : MonoBehaviour
             {
                 Shoot();
                 isShooting = false;
+                currentTimeToShoot = 0f;
             }
         }
     }
