@@ -62,7 +62,6 @@ public class Bullet : MonoBehaviour
             {
                 monster.TakeDamage(1);
             }
-            //monster.transform.position -= new Vector3(0.2f, 0f, 0f);
             monster.rigidbody.AddForce(new Vector2(2f, 0f), ForceMode2D.Impulse);
         }
         

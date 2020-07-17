@@ -103,7 +103,7 @@ public class Monster : MonoBehaviour
 
         var closerPlayerDistance = distance[0];
         var closerPlayerHeading = heading[0];
-        for(int i = 1; i < numberOfPlayers; ++i)
+        for(int i = 1; i < numberOfPlayers; ++i) // Script select closer target
         {
             if(closerPlayerDistance > distance[i])
             {
