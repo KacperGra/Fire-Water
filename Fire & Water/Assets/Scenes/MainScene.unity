@@ -387,10 +387,10 @@ MonoBehaviour:
   slider: {fileID: 231529357}
   gradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.3962264, b: 0.12541158, a: 1}
-    key1: {r: 0.03364185, g: 0.7924528, b: 0.087842606, a: 1}
+    key0: {r: 0, g: 0.1509434, b: 0.047823638, a: 1}
+    key1: {r: 0.014684939, g: 0.6226415, b: 0.055635396, a: 1}
     key2: {r: 0.043480136, g: 0.9811321, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0.043480136, g: 0.9811321, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -398,7 +398,7 @@ MonoBehaviour:
     ctime0: 0
     ctime1: 40092
     ctime2: 65535
-    ctime3: 0
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -733,10 +733,10 @@ MonoBehaviour:
   slider: {fileID: 422752691}
   gradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.3962264, b: 0.12541158, a: 1}
-    key1: {r: 0.03364185, g: 0.7924528, b: 0.087842606, a: 1}
+    key0: {r: 0, g: 0.1509434, b: 0.047823638, a: 1}
+    key1: {r: 0.014684939, g: 0.6226415, b: 0.055635396, a: 1}
     key2: {r: 0.043480136, g: 0.9811321, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0.043480136, g: 0.9811321, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -744,7 +744,7 @@ MonoBehaviour:
     ctime0: 0
     ctime1: 40092
     ctime2: 65535
-    ctime3: 0
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -2275,6 +2275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Water
+  health: 6
   moveSpeed: 4
   shootPoint: {fileID: 96953641}
   bulletPrefab: {fileID: 5176396825561102431, guid: 2266ca94417e75041b3dd44a77cb521f,
@@ -2958,6 +2959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Fire
+  health: 6
   moveSpeed: 4
   shootPoint: {fileID: 2069472609}
   bulletPrefab: {fileID: 1775590703418911755, guid: 509d451125204124e947a7dd02c61e15,
@@ -3243,6 +3245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2080279195}
+  - component: {fileID: 2080279196}
   m_Layer: 5
   m_Name: Player1_UI
   m_TagString: Untagged
@@ -3274,6 +3277,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1124, y: 632}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &2080279196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080279194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf6095a63d6113e42be2d885f7169138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartSprites:
+  - {fileID: -8770001503089466214, guid: adbe5d871841731479f93d73c34f3acc, type: 3}
+  - {fileID: 4974403084737825917, guid: adbe5d871841731479f93d73c34f3acc, type: 3}
+  - {fileID: -3859521769266734839, guid: adbe5d871841731479f93d73c34f3acc, type: 3}
+  hearts:
+  - {fileID: 493586196}
+  - {fileID: 2066175400}
+  - {fileID: 2064901146}
+  player: {fileID: 1652057810}
 --- !u!1 &2119635027
 GameObject:
   m_ObjectHideFlags: 0

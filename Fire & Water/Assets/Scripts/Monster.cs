@@ -71,6 +71,15 @@ public class Monster : MonoBehaviour
         transform.position += new Vector3(direction.x * -moveSpeed * Time.fixedDeltaTime, direction.y * -moveSpeed * Time.fixedDeltaTime);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Player player = collision.collider.GetComponent<Player>();
+        if(player != null)
+        {
+
+        }
+    }
+
     public void TakeDamage(int _damage)
     {
         health -= _damage;

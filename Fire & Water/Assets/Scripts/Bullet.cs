@@ -54,19 +54,18 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Monster monster = collision.collider.GetComponent<Monster>();
-        if (collision.collider.CompareTag("Monster"))
+        
+        if(monster != null)
         {
-            if(monster != null)
+            ExplosionParticles();
+            if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire"))) 
             {
-                ExplosionParticles();
-                if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire"))) 
-                {
-                    monster.TakeDamage(1);
-                }
-                //monster.transform.position -= new Vector3(0.2f, 0f, 0f);
-                monster.rigidbody.AddForce(new Vector2(2f, 0f), ForceMode2D.Impulse);
+                monster.TakeDamage(1);
             }
+            //monster.transform.position -= new Vector3(0.2f, 0f, 0f);
+            monster.rigidbody.AddForce(new Vector2(2f, 0f), ForceMode2D.Impulse);
         }
+        
     }
 
     private void ExplosionParticles()

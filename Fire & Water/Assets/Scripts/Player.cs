@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     private Vector2 movementInput;
     public string playerName;
 
+    [HideInInspector]
+    public int health;
+
     [Header(header: "Movement")]
 
     // Variables used to separate a movement for both players
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        health = 6;
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxTime(timeToShoot);
         Init();
@@ -49,6 +53,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed);  
+    }
+
+    public void TakeDamage()
+    {
+        --health;
     }
 
     void Init()
