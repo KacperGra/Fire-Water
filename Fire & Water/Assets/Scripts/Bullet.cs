@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
-{
-    
+{ 
     [Header(header:"Movement")]
-    public float moveSpeed;
+    private float moveSpeed = 15f;
     public new Rigidbody2D rigidbody;
-    [HideInInspector]
-    public Sprite image;
 
     [Header(header:"Particles")]
+
+    // Fly particles
     public GameObject particles;
-    public float timeToSpawnEffect;
+    private const float timeToSpawnEffect = 0.05f;
     private float currentTimeToSpawnEffect = 0f;
 
-    // LifeTime
+    // Explosion particles
     private float currentLifeTime = 0f;
-    public float lifeTime;
+    private const float lifeTime = 0.8f;
     public GameObject destroyParticles;
 
     private void Update()
@@ -31,20 +30,29 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        ExplosionParticles();
+        FlyParticles();
+ 
+        rigidbody.velocity = transform.right * moveSpeed;
+    }
+
+    private void ExplosionParticles()
+    {
         currentLifeTime += Time.fixedDeltaTime;
-        if(currentLifeTime > lifeTime)
+        if (currentLifeTime > lifeTime)
         {
             Instantiate(destroyParticles, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+    }
 
+    private void FlyParticles()
+    {
         currentTimeToSpawnEffect += Time.fixedDeltaTime;
-        if(currentTimeToSpawnEffect > timeToSpawnEffect)
+        if (currentTimeToSpawnEffect > timeToSpawnEffect)
         {
             Instantiate(particles, transform.position, transform.rotation);
             currentTimeToSpawnEffect = 0f;
         }
-        
-        rigidbody.velocity = transform.right * moveSpeed;
     }
 }
