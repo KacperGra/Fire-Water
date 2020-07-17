@@ -100,8 +100,12 @@ MonoBehaviour:
   moveSpeed: 15
   rigidbody: {fileID: 1920609870119040083}
   image: {fileID: 0}
-  particles: {fileID: 58448432823958290, guid: a0327e57eca2a71479f4a286800dd3f9, type: 3}
+  particles: {fileID: 9200596490335635472, guid: 290b05402df4f654e86dd48c1512af83,
+    type: 3}
   timeToSpawnEffect: 0.05
+  lifeTime: 0.8
+  destroyParticles: {fileID: 7153052333059708660, guid: 378d5fc59df50a946a589e39a6cf060d,
+    type: 3}
 --- !u!50 &1920609870119040083
 Rigidbody2D:
   serializedVersion: 4

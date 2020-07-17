@@ -103,6 +103,9 @@ MonoBehaviour:
   particles: {fileID: 959860881312349806, guid: ef5c8518c7da58a408b13af6d6012af1,
     type: 3}
   timeToSpawnEffect: 0.05
+  lifeTime: 0.8
+  destroyParticles: {fileID: 3330359018407317835, guid: c6e38c4ed3379c449a3b094cd1717eae,
+    type: 3}
 --- !u!50 &5031940986235756551
 Rigidbody2D:
   serializedVersion: 4

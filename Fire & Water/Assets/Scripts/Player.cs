@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public Transform shootPoint;
     public GameObject bulletPrefab;
 
+    bool isShooting; // Variable for holding shoot button and then shoot
+
     // public float timeBetweenShoot; IDEA
     // private float currentTime;
 
@@ -47,13 +49,13 @@ public class Player : MonoBehaviour
 
     void Init()
     {
-        if (playerName == "Fire")
+        if (playerName.Equals("Fire"))
         {
             horizontalMoveName = "P1_Horizontal";
             vericalMoveName = "P1_Vertical";
             shootKey = KeyCode.G;
         }
-        else if (playerName == "Water")
+        else if (playerName.Equals("Water"))
         {
             horizontalMoveName = "P2_Horizontal";
             vericalMoveName = "P2_Vertical";
@@ -63,9 +65,18 @@ public class Player : MonoBehaviour
 
     void PlayerInput()
     {
-        if(Input.GetKeyDown(shootKey))
+        if (Input.GetKeyDown(shootKey))
         {
-            Shoot();
+            isShooting = true;
+            
+        }
+        if(Input.GetKeyUp(shootKey))
+        {
+            if(isShooting.Equals(true))
+            {
+                Shoot();
+                isShooting = false;
+            }
         }
     }
 
@@ -76,7 +87,7 @@ public class Player : MonoBehaviour
 
     private void Animate()
     {
-        if(movementInput.x != 0)
+        if (movementInput.x != 0)
         {
             animator.SetFloat("Speed", Mathf.Abs(movementInput.x));
             if(movementInput.x > 0)

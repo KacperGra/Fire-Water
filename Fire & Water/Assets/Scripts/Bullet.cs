@@ -16,14 +16,13 @@ public class Bullet : MonoBehaviour
     public float timeToSpawnEffect;
     private float currentTimeToSpawnEffect = 0f;
 
+    // LifeTime
+    private float currentLifeTime = 0f;
+    public float lifeTime;
+    public GameObject destroyParticles;
+
     private void Update()
     {
-        var screenBounds = FindObjectOfType<GameMaster>().screenBounds;
-        if (transform.position.x < screenBounds.x - 1 || transform.position.x > screenBounds.y + 1)
-        {
-            Destroy(gameObject);
-        }
-
         if(moveSpeed > 8f)
         {
             moveSpeed *= 0.99f;
@@ -32,6 +31,13 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        currentLifeTime += Time.fixedDeltaTime;
+        if(currentLifeTime > lifeTime)
+        {
+            Instantiate(destroyParticles, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+
         currentTimeToSpawnEffect += Time.fixedDeltaTime;
         if(currentTimeToSpawnEffect > timeToSpawnEffect)
         {
