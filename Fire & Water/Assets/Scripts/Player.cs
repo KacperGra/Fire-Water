@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     public Transform shootPoint;
     public GameObject bulletPrefab;
 
+    // public float timeBetweenShoot; IDEA
+    // private float currentTime;
+
     void Start()
     {
         Init();
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
         {
             horizontalMoveName = "P2_Horizontal";
             vericalMoveName = "P2_Vertical";
+            shootKey = KeyCode.Keypad1;
         }
     }
 
@@ -61,13 +65,13 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(shootKey))
         {
-            Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+            Shoot();
         }
     }
 
     void Shoot()
     {
-
+        Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
     }
 
     private void Animate()

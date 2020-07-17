@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    
     [Header(header:"Movement")]
     public float moveSpeed;
     public new Rigidbody2D rigidbody;
@@ -23,9 +24,9 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(moveSpeed > 5)
+        if(moveSpeed > 8f)
         {
-            moveSpeed *= 0.985f;
+            moveSpeed *= 0.99f;
         }  
     }
 
