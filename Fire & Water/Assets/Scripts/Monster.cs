@@ -23,6 +23,8 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Monster"), LayerMask.NameToLayer("Monster"));
+
         shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
 
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
@@ -56,7 +58,7 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        rigidbody.velocity *= new Vector2(0.99f, 0.99f); // Levels velocity to 0 after knockback
+        rigidbody.velocity *= new Vector2(0.98f, 0.98f); // Levels velocity to 0 after knockback
         Animation();
         SelectCloserTarget();
     }

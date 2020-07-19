@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    private const int numberOfMonsters = 2;
-    public GameObject[] monsterPrefabs = new GameObject[numberOfMonsters];
+    public GameObject[] monsterPrefabs;
     public float timeToSpawn;
     private float currentTimeToSpawn = 0f;
 
@@ -14,9 +13,18 @@ public class SpawnPoint : MonoBehaviour
         currentTimeToSpawn += Time.deltaTime;
         if(currentTimeToSpawn > timeToSpawn)
         {
-            var randomMonsterValue = Random.Range(0, numberOfMonsters);
-            var monster = Instantiate(monsterPrefabs[randomMonsterValue]) as GameObject;
-            monster.transform.position = transform.position;
+            var willSpawn = Random.Range(0, 2);
+            if(willSpawn.Equals(1))
+            {
+                var randomMonsterValue = Random.Range(0, monsterPrefabs.Length);
+                var monster = Instantiate(monsterPrefabs[randomMonsterValue]) as GameObject;
+                //monster.transform.position = transform.position;
+                monster.transform.position = new Vector3(transform.position.x, Random.Range(-7f, 9f), transform.position.z);
+                if (timeToSpawn > 2f) // DEMO
+                {
+                    timeToSpawn -= 0.05f;
+                }
+            }
             currentTimeToSpawn = 0f;
         }
     }

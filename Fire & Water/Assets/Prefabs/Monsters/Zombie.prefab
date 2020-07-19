@@ -566,8 +566,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 0}
+  moveSpeed: 0.4
   health: 2
-  moveSpeed: 1
   elementalName: 
   elementalShadow: {fileID: 4190090497843749189}
   explosionParticles: {fileID: 2507594327351407188, guid: 0ef67df080dff1142897b8180866e9f6,
