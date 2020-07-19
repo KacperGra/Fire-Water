@@ -10,12 +10,10 @@ public class Bullet : MonoBehaviour
     public new Rigidbody2D rigidbody;
 
     [Header(header:"Particles")]
-
     // Fly particles
     public GameObject particles;
     private const float timeToSpawnEffect = 0.05f;
     private float currentTimeToSpawnEffect = 0f;
-
     // Explosion particles
     private float currentLifeTime = 0f;
     private const float lifeTime = 0.8f;
@@ -25,29 +23,22 @@ public class Bullet : MonoBehaviour
     {
         var bulletLayer = LayerMask.NameToLayer("Bullet");
         var playerLayer = LayerMask.NameToLayer("Player");
-
         Physics2D.IgnoreLayerCollision(bulletLayer, playerLayer);
     }
 
     private void Update()
     {
-        if(moveSpeed > 8f)
+        currentLifeTime += Time.deltaTime;
+        if (currentLifeTime > lifeTime)
         {
-            moveSpeed *= 0.99f;
+            Explosion();
         }
-        
+        FlyParticles();
+        DecraseMovementSpeed();
     }
 
     private void FixedUpdate()
     {
-        currentLifeTime += Time.fixedDeltaTime;
-        if (currentLifeTime > lifeTime)
-        {
-            ExplosionParticles();
-        }
-        
-        FlyParticles();
- 
         rigidbody.velocity = transform.right * moveSpeed;
     }
 
@@ -57,7 +48,7 @@ public class Bullet : MonoBehaviour
         
         if(monster != null)
         {
-            ExplosionParticles();
+            Explosion();
             if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire"))) 
             {
                 monster.TakeDamage(1);
@@ -66,20 +57,28 @@ public class Bullet : MonoBehaviour
             {
                 monster.TakeDamage(0);
             }
-            monster.rigidbody.AddForce(new Vector2(2f, 0f), ForceMode2D.Impulse);
+            monster.rigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
         }
         
     }
 
-    private void ExplosionParticles()
-    {  
+    void DecraseMovementSpeed()
+    {
+        if (moveSpeed > 8f)
+        {
+            moveSpeed *= 0.99f;
+        }
+    }
+
+    private void Explosion()
+    {
         Instantiate(destroyParticles, transform.position, transform.rotation);
-        Destroy(gameObject);      
+        Destroy(gameObject);
     }
 
     private void FlyParticles()
     {
-        currentTimeToSpawnEffect += Time.fixedDeltaTime;
+        currentTimeToSpawnEffect += Time.deltaTime;
         if (currentTimeToSpawnEffect > timeToSpawnEffect)
         {
             Instantiate(particles, transform.position, transform.rotation);

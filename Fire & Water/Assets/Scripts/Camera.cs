@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    private const int numberOfPlayers = 2;
-    
+    private const int numberOfPlayers = 2; 
     private readonly Transform[] player = new Transform[numberOfPlayers];
 
     private void Start()
@@ -25,17 +24,9 @@ public class Camera : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, center.y, transform.position.z);
         }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        }
         if(center.x <= 11f && center.x >= -9.6f)
         {
             transform.position = new Vector3(center.x, transform.position.y, transform.position.z);
         }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        } 
     }
 }

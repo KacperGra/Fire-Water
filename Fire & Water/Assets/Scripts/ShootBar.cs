@@ -13,14 +13,12 @@ public class ShootBar : MonoBehaviour
     {
         slider.maxValue = _value;
         slider.value = slider.maxValue;
-
         fill.color = gradient.Evaluate(1f);
     }
 
     public void SetTime(float _value)
     {
         slider.value = _value;
-
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

@@ -33,10 +33,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         health = 6;
+        animator = GetComponent<Animator>();
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxTime(timeToShoot);
         Init();
-        animator = GetComponent<Animator>();   
     }
 
     void Update()

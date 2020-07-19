@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [HideInInspector]
-    public new Rigidbody2D rigidbody;
-
     private const int numberOfPlayers = 2;
     [Header(header: "Movement")]
-    public int health;
+    [HideInInspector]
+    public new Rigidbody2D rigidbody;
     public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
-
-    [HideInInspector]
-    public string elementalName;
-    public GameObject elementalShadow;
-    public GameObject explosionParticles;
-    
     private Vector2 direction;
 
+    public int health;
+    [HideInInspector]
+    public string elementalName;
+
+    // Visual effects
+    public GameObject elementalShadow;
+    public GameObject explosionParticles;
     private Shake shake;
 
     private void Start()
     {
         shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
+
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
 
+        // Script sets to players transform variables values
         var players = FindObjectsOfType<Player>();
         for(int i = 0; i < numberOfPlayers; ++i)
         {
@@ -55,17 +56,8 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        rigidbody.velocity *= new Vector2(0.99f, 0.99f);
-
-        if(direction.x < 0)
-        {
-            transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        }
-        else if (direction.x > 0)
-        {
-            transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-        }
-
+        rigidbody.velocity *= new Vector2(0.99f, 0.99f); // Levels velocity to 0 after knockback
+        Animation();
         SelectCloserTarget();
     }
 
@@ -83,6 +75,18 @@ public class Monster : MonoBehaviour
             shake.CamShake();
             Instantiate(explosionParticles, transform.position, transform.rotation);
             Destroy(gameObject);
+        }
+    }
+
+    void Animation()
+    {
+        if (direction.x < 0)
+        {
+            transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
+        else if (direction.x > 0)
+        {
+            transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
         }
     }
 
