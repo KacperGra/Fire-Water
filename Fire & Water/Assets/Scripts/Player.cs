@@ -7,29 +7,28 @@ public class Player : MonoBehaviour
 {
     private Animator animator;
 
-    private Vector2 movementInput;
     public string playerName;
-
     [HideInInspector]
     public int health;
 
     [Header(header: "Movement")]
 
     // Variables used to separate a movement for both players
-    private string horizontalMoveName;
-    private string vericalMoveName;
-
     public float moveSpeed;
 
-    [Header(header: "Shooting")]
-    private KeyCode shootKey;
+    [Header(header: "Shooting")]    
     public Transform shootPoint;
     public GameObject bulletPrefab;
     public ShootBar shootBar;
-
     bool isShooting = false; // Variable for holding shoot button and then shoot
     private readonly float timeToShoot = 1.2f;
     private float currentTimeToShoot;
+
+    // Input
+    private Vector2 movementInput;
+    private string horizontalMoveName;
+    private string vericalMoveName;
+    private KeyCode shootKey;
 
     void Start()
     {
