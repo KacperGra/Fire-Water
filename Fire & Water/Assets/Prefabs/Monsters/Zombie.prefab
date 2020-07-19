@@ -566,7 +566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 0}
-  moveSpeed: 0.4
+  moveSpeed: 0.8
   health: 2
   elementalName: 
   elementalShadow: {fileID: 4190090497843749189}

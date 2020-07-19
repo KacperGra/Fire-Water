@@ -8,7 +8,6 @@ public class ShootBar : MonoBehaviour
     public Slider slider;
     public Gradient gradient;
     public Image fill;
-
     public void SetMaxTime(float _value)
     {
         slider.maxValue = _value;

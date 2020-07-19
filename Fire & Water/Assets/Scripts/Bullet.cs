@@ -24,6 +24,8 @@ public class Bullet : MonoBehaviour
         var bulletLayer = LayerMask.NameToLayer("Bullet");
         var playerLayer = LayerMask.NameToLayer("Player");
         Physics2D.IgnoreLayerCollision(bulletLayer, playerLayer);
+        var decorationLayer = LayerMask.NameToLayer("Decoration");
+        Physics2D.IgnoreLayerCollision(bulletLayer, decorationLayer);
     }
 
     private void Update()
