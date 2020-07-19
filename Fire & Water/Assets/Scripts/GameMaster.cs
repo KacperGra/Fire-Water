@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
-    [HideInInspector]
-    public Vector4 screenBounds;
-
-    private void Start()
+    public void GameOver()
     {
-        screenBounds = new Vector4(-18.5f, 20f, -9.12f, 8.8f); // x - Left; y - Right; z - Up; w - Down;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

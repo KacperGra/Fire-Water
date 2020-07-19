@@ -8,18 +8,13 @@ public class PlayerUI : MonoBehaviour
     public Sprite[] heartSprites = new Sprite[3];
     public Image[] hearts = new Image[3];
     public Player player;
-    
-
-    private void Start()
-    {
-    }
 
     private void Update()
     {
-        setHeartSprites();
+        SetHeartSprites();
     }
 
-    void setHeartSprites()
+    void SetHeartSprites()
     {
         var full = heartSprites[0];
         var half = heartSprites[1];

@@ -507,6 +507,7 @@ GameObject:
   - component: {fileID: 1822480450833907996}
   - component: {fileID: -8315381241858692772}
   - component: {fileID: 1488791340}
+  - component: {fileID: 2536654222723055359}
   m_Layer: 10
   m_Name: Zombie
   m_TagString: Monster
@@ -564,6 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2274e532058c1448becf39b58e473a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
   health: 2
   moveSpeed: 1
   elementalName: 
@@ -596,6 +598,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.74762535, y: 1.345355}
   m_EdgeRadius: 0
+--- !u!50 &2536654222723055359
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822480450833907986}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1001 &1823077475
 PrefabInstance:
   m_ObjectHideFlags: 0

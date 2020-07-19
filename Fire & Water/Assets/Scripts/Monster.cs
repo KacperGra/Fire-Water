@@ -20,8 +20,11 @@ public class Monster : MonoBehaviour
     
     private Vector2 direction;
 
+    private Shake shake;
+
     private void Start()
     {
+        shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
 
         var players = FindObjectsOfType<Player>();
@@ -76,15 +79,19 @@ public class Monster : MonoBehaviour
         Player player = collision.collider.GetComponent<Player>();
         if(player != null)
         {
-
+            player.TakeDamage();
+            shake.CamShake();
+            Instantiate(explosionParticles, transform.position, transform.rotation);
+            Destroy(gameObject);
         }
     }
 
     public void TakeDamage(int _damage)
     {
         health -= _damage;
-        if(health <= 0)
-        {
+        shake.CamShake();
+        if (health <= 0)
+        {    
             Instantiate(explosionParticles, transform.position, transform.rotation);
             Destroy(gameObject);
         }

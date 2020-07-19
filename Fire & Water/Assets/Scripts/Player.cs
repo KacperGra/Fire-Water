@@ -58,6 +58,11 @@ public class Player : MonoBehaviour
     public void TakeDamage()
     {
         --health;
+        if(health <= 0)
+        {
+            var gameMaster = FindObjectOfType<GameMaster>();
+            gameMaster.GameOver();
+        }
     }
 
     void Init()
@@ -94,11 +99,17 @@ public class Player : MonoBehaviour
                 currentTimeToShoot = 0f;
             }
         }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        var bullet = Instantiate(bulletPrefab) as GameObject;
+        bullet.transform.position = shootPoint.position;
+        bullet.transform.rotation = transform.rotation;
     }
 
     private void Animate()
