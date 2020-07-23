@@ -23,6 +23,10 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
+        moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Random speed 
+        var randomScaleVal = Random.Range(0.85f, 1.2f);
+        transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Random scale
+
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Monster"), LayerMask.NameToLayer("Monster"));
 
         shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxTime(timeToShoot);
         Init();
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Player"));
     }
 
     void Update()
@@ -100,7 +102,7 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
