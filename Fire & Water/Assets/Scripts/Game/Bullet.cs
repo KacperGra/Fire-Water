@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public string elementalName;
     [Header(header:"Movement")]
     private float moveSpeed = 15f;
-    public new Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbody;
 
     [Header(header:"Particles")]
     // Fly particles
@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        rigidbody = GetComponent<Rigidbody2D>();
         InvokeRepeating("FlyParticles", 0f, 0.05f);
         Invoke("Explosion", 0.8f);
     }

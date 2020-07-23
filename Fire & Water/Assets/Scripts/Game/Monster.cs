@@ -7,7 +7,7 @@ public class Monster : MonoBehaviour
     private const int numberOfPlayers = 2;
     [Header(header: "Movement")]
     [HideInInspector]
-    public new Rigidbody2D rigidbody;
+    public Rigidbody2D rigidbody;
     public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
     private Vector2 direction;
