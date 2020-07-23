@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public Animator animator;
     public GameObject clickParticles;
+    public GameObject panel;
 
     private void Update()
     {
@@ -19,7 +21,15 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene((int)SceneIndexes.LEVEL_01);
+        StartCoroutine(LoadScene((int)SceneIndexes.LEVEL_01));
+    }
+
+    IEnumerator LoadScene(int _sceneIndex)
+    {
+        panel.SetActive(true);
+        animator.SetBool("Start", true);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(_sceneIndex);
     }
 
     public void ExitGame()
