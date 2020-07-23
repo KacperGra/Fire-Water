@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxTime(timeToShoot);
         Init();
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Player"));
     }
 
     void Update()

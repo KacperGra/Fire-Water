@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4239089420437571428}
   - component: {fileID: 4239089420437571429}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2044912875}
   - component: {fileID: 8149141693883392285}
   - component: {fileID: 8753889237036223463}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,6 +302,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 8909547511005739971, guid: e686b2da05ac99143bb5efa271dccd9f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e686b2da05ac99143bb5efa271dccd9f, type: 3}

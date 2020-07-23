@@ -12,27 +12,17 @@ public class Bullet : MonoBehaviour
     [Header(header:"Particles")]
     // Fly particles
     public GameObject particles;
-    private const float timeToSpawnEffect = 0.05f;
-    private float currentTimeToSpawnEffect = 0f;
     // Explosion particles
-    private float currentLifeTime = 0f;
-    private const float lifeTime = 0.8f;
     public GameObject destroyParticles;
 
     private void Start()
     {
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Bullet"), LayerMask.NameToLayer("Player"));
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Bullet"), LayerMask.NameToLayer("Decoration"));
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Bullet"), LayerMask.NameToLayer("Bullet"));
+        InvokeRepeating("FlyParticles", 0f, 0.05f);
+        Invoke("Explosion", 0.8f);
     }
 
     private void Update()
     {
-        currentLifeTime += Time.deltaTime;
-        if (currentLifeTime > lifeTime)
-        {
-            Explosion();
-        }
         FlyParticles();
         DecraseMovementSpeed();
     }
@@ -78,11 +68,6 @@ public class Bullet : MonoBehaviour
 
     private void FlyParticles()
     {
-        currentTimeToSpawnEffect += Time.deltaTime;
-        if (currentTimeToSpawnEffect > timeToSpawnEffect)
-        {
-            Instantiate(particles, transform.position, transform.rotation);
-            currentTimeToSpawnEffect = 0f;
-        }
+        Instantiate(particles, transform.position, transform.rotation);
     }
 }
