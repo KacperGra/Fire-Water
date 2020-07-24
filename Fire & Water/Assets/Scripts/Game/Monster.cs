@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Monster : MonoBehaviour
 {
     private const int numberOfPlayers = 2;
+
+    public string MonsterName; // If needed
     [Header(header: "Movement")]
     [HideInInspector]
-    public Rigidbody2D rigidbody;
+    public new Rigidbody2D rigidbody;
     public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
     private Vector2 direction;
@@ -21,6 +24,10 @@ public class Monster : MonoBehaviour
     public GameObject explosionParticles;
     private Shake shake;
 
+    [Header(header: "Shooting: (Cowboy only)")]
+    public GameObject bulletPrefab;
+    public GameObject shootPoint;
+
     private void Start()
     {
         moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Random speed 
@@ -30,6 +37,8 @@ public class Monster : MonoBehaviour
         shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
 
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rigidbody.gravityScale = 0f;
 
         // Script sets to players transform variables values
         var players = FindObjectsOfType<Player>();
@@ -56,6 +65,11 @@ public class Monster : MonoBehaviour
             default:
                 break;
         }
+
+        if (MonsterName.Equals("Cowboy"))
+        {
+            InvokeRepeating("Shoot", 1.5f, 3.5f);
+        }
     }
 
     private void Update()
@@ -63,6 +77,7 @@ public class Monster : MonoBehaviour
         rigidbody.velocity *= new Vector2(0.98f, 0.98f); // Levels velocity to 0 after knockback
         Animation();
         SelectCloserTarget();
+        
     }
 
     private void FixedUpdate()
@@ -80,6 +95,13 @@ public class Monster : MonoBehaviour
             Instantiate(explosionParticles, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+    }
+
+    void Shoot()
+    {
+        var bullet = Instantiate(bulletPrefab) as GameObject;
+        bullet.transform.position = shootPoint.transform.position;
+        bullet.transform.rotation = transform.rotation;
     }
 
     void Animation()

@@ -17,9 +17,18 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        if(elementalName.Equals("Cowboy"))
+        {
+            moveSpeed = 7.5f;
+            InvokeRepeating("FlyParticles", 0f, 0.225f);
+        }
+        else
+        {
+            InvokeRepeating("FlyParticles", 0f, 0.05f);
+        }
         rigidbody = GetComponent<Rigidbody2D>();
-        InvokeRepeating("FlyParticles", 0f, 0.05f);
-        Invoke("Explosion", 0.8f);
+        
+        Invoke("Explosion", 0.75f);
     }
 
     private void Update()
@@ -35,27 +44,42 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Monster monster = collision.collider.GetComponent<Monster>();
-        
-        if(monster != null)
+        if(!elementalName.Equals("Cowboy"))
         {
-            Explosion();
-            if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire"))) 
+            Monster monster = collision.collider.GetComponent<Monster>();
+            if (monster != null)
             {
-                monster.TakeDamage(1);
+                Explosion();
+                if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire")))
+                {
+                    monster.TakeDamage(1);
+                }
+                else
+                {
+                    monster.TakeDamage(0);
+                }
+                monster.rigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
             }
-            else
+        } 
+        else
+        {
+            Player player = collision.collider.GetComponent<Player>();
+            if(player != null)
             {
-                monster.TakeDamage(0);
+                Explosion();
+                player.TakeDamage();
             }
-            monster.rigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
         }
         
     }
 
     void DecraseMovementSpeed()
     {
-        if (moveSpeed > 8f)
+        if (moveSpeed > 8f && !elementalName.Equals("Cowboy"))
+        {
+            moveSpeed *= 0.99f;
+        }
+        else if(moveSpeed > 3f && elementalName.Equals("Cowboy"))
         {
             moveSpeed *= 0.99f;
         }

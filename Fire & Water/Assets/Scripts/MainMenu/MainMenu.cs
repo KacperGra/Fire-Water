@@ -34,7 +34,14 @@ public class MainMenu : MonoBehaviour
 
     public void ExitGame()
     {
+        StartCoroutine(EndGame());
+    }
+
+    IEnumerator EndGame()
+    {
+        panel.SetActive(true);
+        animator.SetBool("Start", true);
+        yield return new WaitForSeconds(1f);
         Application.Quit();
     }
-    
 }

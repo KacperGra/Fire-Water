@@ -419,6 +419,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint2
       objectReference: {fileID: 0}
+    - target: {fileID: 7437125562599160335, guid: 1bc95e3a2d86ca341b5508a55a619562,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc95e3a2d86ca341b5508a55a619562, type: 3}
 --- !u!1 &96953640
@@ -1770,7 +1775,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -5866,6 +5871,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437125562599160335, guid: 1bc95e3a2d86ca341b5508a55a619562,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc95e3a2d86ca341b5508a55a619562, type: 3}

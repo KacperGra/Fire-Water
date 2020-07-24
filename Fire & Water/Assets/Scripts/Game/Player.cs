@@ -45,9 +45,13 @@ public class Player : MonoBehaviour
         currentTimeToShoot += Time.deltaTime;
         shootBar.SetTime(currentTimeToShoot);
         PlayerInput();
-        movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));   
-
+        movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
         Animate();
+        var rigidbody = GetComponent<Rigidbody2D>();
+        if(rigidbody.velocity.x > 0 || rigidbody.velocity.y > 0)
+        {
+            rigidbody.velocity = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
