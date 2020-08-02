@@ -6,16 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    #region Variables
     private Animator animator;
-
+    [Header(header: "Details")]
     public string playerName;
-    [HideInInspector]
-    public int health;
-
-    [Header(header: "Movement")]
-
-    // Variables used to separate a movement for both players
     public float moveSpeed;
+    [HideInInspector] public int health;
+    private readonly int maxHealth = 6;
 
     [Header(header: "Shooting")]    
     public Transform shootPoint;
@@ -30,10 +27,12 @@ public class Player : MonoBehaviour
     private string horizontalMoveName;
     private string vericalMoveName;
     private KeyCode shootKey;
+    #endregion
 
+    #region Functions
     void Start()
     {
-        health = 6;
+        health = maxHealth;
         animator = GetComponent<Animator>();
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxTime(timeToShoot);
@@ -140,4 +139,5 @@ public class Player : MonoBehaviour
         }
 
     }
+    #endregion
 }

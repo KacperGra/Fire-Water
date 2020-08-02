@@ -6,8 +6,20 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public Animator animator;
+    public Animator buttonStartAnimation;
     public GameObject clickParticles;
     public GameObject panel;
+
+    private void Start()
+    {
+        StartCoroutine(StartAnimation());
+    }
+
+    IEnumerator StartAnimation()
+    {
+        yield return new WaitForSeconds(2f);
+        buttonStartAnimation.SetBool("End", true);
+    }
 
     private void Update()
     {

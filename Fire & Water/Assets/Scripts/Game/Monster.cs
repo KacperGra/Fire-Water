@@ -5,21 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Monster : MonoBehaviour
 {
+    #region Variables
     private const int numberOfPlayers = 2;
-
-    public string MonsterName; // If needed
-    [Header(header: "Movement")]
-    [HideInInspector]
-    public new Rigidbody2D rigidbody;
-    public float moveSpeed;
     private readonly Transform[] player = new Transform[numberOfPlayers];
     private Vector2 direction;
+    [Header(header: "Details")]
+    public string MonsterName; // If needed
+    [Range(1, 3)]public int health;
+    [Range(0.4f, 4f)] public float moveSpeed;    
+    [HideInInspector] public string elementalName;
+    [HideInInspector] public new Rigidbody2D rigidbody;
 
-    public int health;
-    [HideInInspector]
-    public string elementalName;
-
-    // Visual effects
+    [Header(header: "Visual effects")]
     public GameObject elementalShadow;
     public GameObject explosionParticles;
     private Shake shake;
@@ -27,49 +24,14 @@ public class Monster : MonoBehaviour
     [Header(header: "Shooting: (Cowboy only)")]
     public GameObject bulletPrefab;
     public GameObject shootPoint;
+    #endregion
 
+
+    #region Functions
     private void Start()
     {
-        moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Random speed 
-        var randomScaleVal = Random.Range(0.85f, 1.2f);
-        transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Random scale   
-
-        shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
-
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        rigidbody.gravityScale = 0f;
-
-        // Script sets to players transform variables values
-        var players = FindObjectsOfType<Player>();
-        for(int i = 0; i < numberOfPlayers; ++i)
-        {
-            player[i] = players[i].transform;
-        }
-
-        // Script to set color and elemental type of monster
-        int randomValue = Random.Range(0, 2);
-        const int alphaComponent = 120;
-        var waterColor = new Color32(36, 36, 245, alphaComponent);
-        var fireColor = new Color32(255, 40, 40, alphaComponent);
-        switch(randomValue)
-        {
-            case 0:
-                elementalShadow.GetComponent<SpriteRenderer>().color = waterColor;
-                elementalName = "Water";
-                break;
-            case 1:
-                elementalShadow.GetComponent<SpriteRenderer>().color = fireColor;
-                elementalName = "Fire";
-                break;
-            default:
-                break;
-        }
-
-        if (MonsterName.Equals("Cowboy"))
-        {
-            InvokeRepeating("Shoot", 1.5f, 3.5f);
-        }
+        RandomizeStats();
+        Init();
     }
 
     private void Update()
@@ -116,6 +78,53 @@ public class Monster : MonoBehaviour
         }
     }
 
+    void RandomizeStats()
+    {
+        moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Random speed 
+        var randomScaleVal = Random.Range(0.85f, 1.2f);
+        transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Random scale   
+
+        // Script to set color and elemental type of monster
+        int randomValue = Random.Range(0, 2);
+        const int alphaComponent = 120;
+        var waterColor = new Color32(36, 36, 245, alphaComponent);
+        var fireColor = new Color32(255, 40, 40, alphaComponent);
+        switch (randomValue)
+        {
+            case 0:
+                elementalShadow.GetComponent<SpriteRenderer>().color = waterColor;
+                elementalName = "Water";
+                break;
+            case 1:
+                elementalShadow.GetComponent<SpriteRenderer>().color = fireColor;
+                elementalName = "Fire";
+                break;
+            default:
+                break;
+        }
+    }
+
+    void Init()
+    {
+        shake = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<Shake>();
+
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rigidbody.gravityScale = 0f;
+
+        // Script sets to players transform variables values
+        var players = FindObjectsOfType<Player>();
+        for (int i = 0; i < numberOfPlayers; ++i)
+        {
+            player[i] = players[i].transform;
+        }
+
+        if (MonsterName.Equals("Cowboy"))
+        {
+            InvokeRepeating("Shoot", 1.5f, 3.5f);
+        }
+    }
+
     public void TakeDamage(int _damage)
     {
         health -= _damage;
@@ -150,4 +159,5 @@ public class Monster : MonoBehaviour
         }
         direction = closerPlayerHeading / closerPlayerDistance;
     }
+    #endregion
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Cam : MonoBehaviour
 {
     private const int numberOfPlayers = 2;
