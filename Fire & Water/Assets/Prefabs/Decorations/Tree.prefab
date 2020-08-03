@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2544270213872233997}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2544270214798418143}
   - component: {fileID: 2544270214798418141}
   - component: {fileID: 2544270214798418140}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leafs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: -4807310461760660131, guid: 73af80a33874ad54aa3067de9409fe64,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2544270215206164918}
   - component: {fileID: 2544270215206164916}
   - component: {fileID: 2544270215206164919}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,6 +320,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 8909547511005739971, guid: e686b2da05ac99143bb5efa271dccd9f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e686b2da05ac99143bb5efa271dccd9f, type: 3}

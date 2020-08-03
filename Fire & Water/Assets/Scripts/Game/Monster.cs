@@ -15,6 +15,7 @@ public class Monster : MonoBehaviour
     [Range(0.4f, 4f)] public float moveSpeed;    
     [HideInInspector] public string elementalName;
     [HideInInspector] public new Rigidbody2D rigidbody;
+    public GameObject coinPrefab;
 
     [Header(header: "Visual effects")]
     public GameObject elementalShadow;
@@ -25,7 +26,6 @@ public class Monster : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject shootPoint;
     #endregion
-
 
     #region Functions
     private void Start()
@@ -80,12 +80,16 @@ public class Monster : MonoBehaviour
 
     void RandomizeStats()
     {
-        moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Random speed 
+        moveSpeed = Random.Range(moveSpeed - 0.25f, moveSpeed + 0.25f); // Ranodmized move speed a bit
         var randomScaleVal = Random.Range(0.85f, 1.2f);
-        transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Random scale   
+        transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Different size of monsters 
 
-        // Script to set color and elemental type of monster
-        int randomValue = Random.Range(0, 3);
+        int randomValue = Random.Range(0, 3); // Value: 0 (if TESTMODE activated)
+        var gameMaster = FindObjectOfType<GameMaster>();
+        if (gameMaster.testMode.Equals(true))
+        {
+            randomValue = 0;
+        }
         const int alphaComponent = 120;
         var waterColor = new Color32(36, 36, 245, alphaComponent);
         var fireColor = new Color32(255, 40, 40, alphaComponent);
@@ -93,16 +97,17 @@ public class Monster : MonoBehaviour
         switch (randomValue)
         {
             case 0:
-                elementalShadow.GetComponent<SpriteRenderer>().color = waterColor;
-                elementalName = "Water";
+                elementalShadow.GetComponent<SpriteRenderer>().color = purpleColor;
+                elementalName = "Both";
+                
                 break;
             case 1:
                 elementalShadow.GetComponent<SpriteRenderer>().color = fireColor;
                 elementalName = "Fire";
                 break;
             case 2:
-                elementalShadow.GetComponent<SpriteRenderer>().color = purpleColor;
-                elementalName = "Both";
+                elementalShadow.GetComponent<SpriteRenderer>().color = waterColor;
+                elementalName = "Water";
                 break;
             default:
                 break;
@@ -135,10 +140,17 @@ public class Monster : MonoBehaviour
         health -= _damage;
         shake.CamShake();
         if (health <= 0)
-        {    
+        {
+            SpawnCoin();
             Instantiate(explosionParticles, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+    }
+
+    void SpawnCoin()
+    {
+        var coin = Instantiate(coinPrefab) as GameObject;
+        coin.transform.position = transform.position;
     }
 
     void SelectCloserTarget()

@@ -19,13 +19,9 @@ public class Bullet : MonoBehaviour
         if(elementalName.Equals("Cowboy"))
         {
             moveSpeed = 7.5f;
-            InvokeRepeating("FlyParticles", 0f, .225f);
         }
-        else
-        {
-            InvokeRepeating("FlyParticles", 0f, .05f);
-        }
-        
+        InvokeRepeating("FlyParticles", 0f, .25f);
+
         Invoke("Explosion", .75f);
     }
 

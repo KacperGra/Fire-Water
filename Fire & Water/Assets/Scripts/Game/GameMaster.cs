@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
+    public bool testMode;
     private void Start()
     {
         IgnoreCollisionsInit();

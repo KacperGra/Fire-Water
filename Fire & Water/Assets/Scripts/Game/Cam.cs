@@ -5,13 +5,12 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Cam : MonoBehaviour
 {
-    private const int numberOfPlayers = 2;
-    private readonly Transform[] player = new Transform[numberOfPlayers];
+    public Transform[] player = new Transform[2];
 
     private void Start()
     {
         var players = FindObjectsOfType<Player>();
-        for (int i = 0; i < numberOfPlayers; ++i)
+        for (int i = 0; i < 2; ++i)
         {
             player[i] = players[i].transform;
         }

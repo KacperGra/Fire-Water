@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4262806474828759110}
   - component: {fileID: 6487571905502382070}
   - component: {fileID: 1001622760}
+  - component: {fileID: 1389252714893010559}
   m_Layer: 11
   m_Name: BrownMushroom
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 14
   m_Sprite: {fileID: -3196045656646204169, guid: 73af80a33874ad54aa3067de9409fe64,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,6 +104,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &1389252714893010559
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7966690182213033495}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.023783684, y: -0.4153208}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.86, y: 0.9}
+    newSize: {x: 0.86, y: 0.9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.23191452, y: 0.057709217}
+  m_EdgeRadius: 0
 --- !u!1001 &5944861352679639614
 PrefabInstance:
   m_ObjectHideFlags: 0
