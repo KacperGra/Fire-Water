@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
             if (monster != null)
             {
                 Explosion();
-                if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire")))
+                if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire")) || monster.elementalName == "Both")
                 {
                     monster.TakeDamage(1);
                 }

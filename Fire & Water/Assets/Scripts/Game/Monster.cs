@@ -85,10 +85,11 @@ public class Monster : MonoBehaviour
         transform.localScale = new Vector3(randomScaleVal, randomScaleVal, transform.localScale.z); // Random scale   
 
         // Script to set color and elemental type of monster
-        int randomValue = Random.Range(0, 2);
+        int randomValue = Random.Range(0, 3);
         const int alphaComponent = 120;
         var waterColor = new Color32(36, 36, 245, alphaComponent);
         var fireColor = new Color32(255, 40, 40, alphaComponent);
+        var purpleColor = new Color32(255, 0, 189, alphaComponent);
         switch (randomValue)
         {
             case 0:
@@ -98,6 +99,10 @@ public class Monster : MonoBehaviour
             case 1:
                 elementalShadow.GetComponent<SpriteRenderer>().color = fireColor;
                 elementalName = "Fire";
+                break;
+            case 2:
+                elementalShadow.GetComponent<SpriteRenderer>().color = purpleColor;
+                elementalName = "Both";
                 break;
             default:
                 break;
