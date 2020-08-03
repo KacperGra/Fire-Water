@@ -19,7 +19,7 @@ public class Cam : MonoBehaviour
 
     void Update()
     {
-        var center = Vector3.Lerp(player[0].position, player[1].position, 0.5f);
+        var center = Vector3.Lerp(player[0].position, player[1].position, .5f);
 
         if (center.y <= 4.58f && center.y >= -3.37f)
         {

@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     public string elementalName;
     [Header(header:"Movement")]
     private float moveSpeed = 15f;
-    private Rigidbody2D rigidbody;
 
     [Header(header:"Particles")]
     // Fly particles
@@ -20,15 +19,14 @@ public class Bullet : MonoBehaviour
         if(elementalName.Equals("Cowboy"))
         {
             moveSpeed = 7.5f;
-            InvokeRepeating("FlyParticles", 0f, 0.225f);
+            InvokeRepeating("FlyParticles", 0f, .225f);
         }
         else
         {
-            InvokeRepeating("FlyParticles", 0f, 0.05f);
+            InvokeRepeating("FlyParticles", 0f, .05f);
         }
-        rigidbody = GetComponent<Rigidbody2D>();
         
-        Invoke("Explosion", 0.75f);
+        Invoke("Explosion", .75f);
     }
 
     private void Update()
@@ -39,7 +37,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.velocity = transform.right * moveSpeed;
+        gameObject.GetComponent<Rigidbody2D>().velocity = transform.right * moveSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -77,11 +75,11 @@ public class Bullet : MonoBehaviour
     {
         if (moveSpeed > 8f && !elementalName.Equals("Cowboy"))
         {
-            moveSpeed *= 0.99f;
+            moveSpeed *= .99f;
         }
         else if(moveSpeed > 3f && elementalName.Equals("Cowboy"))
         {
-            moveSpeed *= 0.99f;
+            moveSpeed *= .99f;
         }
     }
 

@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
         PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
         Animate();
+        gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
     }
 
     private void FixedUpdate()
