@@ -141,6 +141,7 @@ public class Monster : MonoBehaviour
         shake.CamShake();
         if (health <= 0)
         {
+            FindObjectOfType<GameMaster>().MonsterDeath();
             SpawnCoin();
             Instantiate(explosionParticles, transform.position, transform.rotation);
             Destroy(gameObject);

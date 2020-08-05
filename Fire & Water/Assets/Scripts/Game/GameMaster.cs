@@ -10,16 +10,24 @@ public class GameMaster : MonoBehaviour
 
     public Text coinNumberText;
     [HideInInspector] public int coinNumber;
+    public Text monsterNumberText;
+    [HideInInspector] public int monsterNumber;
+    public Text killedMonstersNumberText;
+    [HideInInspector] public int killedMonstersNumber;
 
     private void Start()
     {
         coinNumber = 0;
+        monsterNumber = 0;
+        killedMonstersNumber = 0;
         IgnoreCollisionsInit();
     }
 
     private void Update()
     {
         coinNumberText.text = coinNumber.ToString();
+        monsterNumberText.text = monsterNumber.ToString();
+        killedMonstersNumberText.text = killedMonstersNumber.ToString();
     }
 
     private void IgnoreCollisionsInit()
@@ -40,6 +48,17 @@ public class GameMaster : MonoBehaviour
     public void PickCoin()
     {
         ++coinNumber;
+    }
+
+    public void MonsterDeath()
+    { 
+        --monsterNumber;
+        ++killedMonstersNumber;
+    }
+
+    public void MonsterSpawn()
+    {
+        ++monsterNumber;
     }
 
     public void GameOver()

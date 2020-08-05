@@ -13,11 +13,14 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     [HideInInspector] public int health;
     private readonly int maxHealth = 6;
+    public Bar manaBar;
+    [HideInInspector] public int mana;
+    private readonly int maxMana = 100;
 
     [Header(header: "Shooting")]    
     public Transform shootPoint;
     public GameObject bulletPrefab;
-    public ShootBar shootBar;
+    public Bar shootBar;
     bool isShooting = false; // Variable for holding shoot button and then shoot
     private readonly float timeToShoot = 1.2f;
     private float currentTimeToShoot;
@@ -33,16 +36,19 @@ public class Player : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        mana = maxMana;
+        manaBar.SetMaxValue(maxMana);
+
         animator = GetComponent<Animator>();
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
-        shootBar.SetMaxTime(timeToShoot);
+        shootBar.SetMaxValue(timeToShoot);
         Init();
     }
 
     void Update()
     {
         currentTimeToShoot += Time.deltaTime;
-        shootBar.SetTime(currentTimeToShoot);
+        shootBar.SetValue(currentTimeToShoot);
         PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
         Animate();

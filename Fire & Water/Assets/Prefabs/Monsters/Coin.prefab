@@ -49,6 +49,8 @@ MonoBehaviour:
   pickParticles: {fileID: 6326856223594961708, guid: 684a8ac8d099a2c4fbb445ff780d1130,
     type: 3}
   coinAnimator: {fileID: 1244264145276926686}
+  coinSprite: {fileID: 1062052370330735855}
+  LightSpirte: {fileID: 1062052369363598056}
 --- !u!58 &1062052368970308590
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -217,7 +219,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 40
-  m_Sprite: {fileID: 21300000, guid: 7ed0426b3b586da479bd1e0d6d1536e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7706bea8e1dfbd44b903677933fcf957, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

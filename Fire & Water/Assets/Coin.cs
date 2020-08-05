@@ -6,11 +6,17 @@ public class Coin : MonoBehaviour
 {
     public GameObject pickParticles;
     public Animator coinAnimator;
+    public SpriteRenderer coinSprite;
+    public SpriteRenderer LightSpirte;
+    private float coinLifetime;
 
     private void Start()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         StartCoroutine(StartAnimation());
+
+        coinLifetime = 15f;
+        Invoke("Explosion", coinLifetime);
     }
 
     IEnumerator StartAnimation()
@@ -26,9 +32,14 @@ public class Coin : MonoBehaviour
         {
             FindObjectOfType<GameMaster>().PickCoin();
 
-            // Destroy ->
-            Instantiate(pickParticles, transform.position, transform.rotation);
-            Destroy(gameObject);
+            
+            Explosion(); // <- Destroy
         }
+    }
+
+    public void Explosion()
+    {
+        Instantiate(pickParticles, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
