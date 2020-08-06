@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
         if(!elementalName.Equals("Cowboy"))
         {
             Monster monster = collision.collider.GetComponent<Monster>();
-            if (monster != null)
+            if (monster != null && monster.IsDead.Equals(false))
             {
                 Explosion();
                 if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire")) || monster.elementalName == "Both")

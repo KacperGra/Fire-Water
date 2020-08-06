@@ -8,6 +8,8 @@ public class GameMaster : MonoBehaviour
 {
     public bool testMode;
 
+
+    [Header("UI")]
     public Text coinNumberText;
     [HideInInspector] public int coinNumber;
     public Text monsterNumberText;
@@ -15,12 +17,15 @@ public class GameMaster : MonoBehaviour
     public Text killedMonstersNumberText;
     [HideInInspector] public int killedMonstersNumber;
 
+    public GameObject shopWindow;
+
     private void Start()
     {
         coinNumber = 0;
         monsterNumber = 0;
         killedMonstersNumber = 0;
         IgnoreCollisionsInit();
+        shopWindow.SetActive(false);
     }
 
     private void Update()
@@ -28,6 +33,17 @@ public class GameMaster : MonoBehaviour
         coinNumberText.text = coinNumber.ToString();
         monsterNumberText.text = monsterNumber.ToString();
         killedMonstersNumberText.text = killedMonstersNumber.ToString();
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (shopWindow.activeSelf == false)
+            {
+                shopWindow.SetActive(true);
+            }
+            else
+            {
+                shopWindow.SetActive(false);
+            }
+        }
     }
 
     private void IgnoreCollisionsInit()

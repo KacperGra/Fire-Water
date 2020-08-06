@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private string horizontalMoveName;
     private string vericalMoveName;
     private KeyCode shootKey;
+    private KeyCode multiShootKey;
     #endregion
 
     #region Functions
@@ -77,12 +78,14 @@ public class Player : MonoBehaviour
             horizontalMoveName = "P1_Horizontal";
             vericalMoveName = "P1_Vertical";
             shootKey = KeyCode.G;
+            multiShootKey = KeyCode.Q;
         }
         else if (playerName.Equals("Water"))
         {
             horizontalMoveName = "P2_Horizontal";
             vericalMoveName = "P2_Vertical";
             shootKey = KeyCode.Keypad1;
+            multiShootKey = KeyCode.Keypad2;
         }
     }
 
@@ -103,6 +106,10 @@ public class Player : MonoBehaviour
                 isShooting = false;
                 currentTimeToShoot = 0f;
             }
+        }
+        if(Input.GetKeyUp(multiShootKey))
+        {
+            MultiShoot();
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -125,6 +132,7 @@ public class Player : MonoBehaviour
             if(movementInput.x > 0)
             {
                 transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
             }
             else if (movementInput.x < 0)
             {
@@ -142,4 +150,27 @@ public class Player : MonoBehaviour
 
     }
     #endregion
+
+    void MultiShoot()
+    {
+        GameObject[] bullet = new GameObject[3];
+        for(int i = 0; i < 3; ++i)
+        {
+            bullet[i] = Instantiate(bulletPrefab) as GameObject;
+            bullet[i].transform.position = shootPoint.position;
+            bullet[i].transform.rotation = transform.rotation;
+        }
+        var rotationValue = 10f;
+        Debug.Log(transform.rotation.y);
+        if(transform.rotation.y == 0)
+        {
+            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
+            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
+        }
+        else if (transform.rotation.y == 1)
+        {
+            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
+            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
+        }
+    }
 }

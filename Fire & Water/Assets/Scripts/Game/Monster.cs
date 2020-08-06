@@ -11,11 +11,13 @@ public class Monster : MonoBehaviour
     private Vector2 direction;
     [Header(header: "Details")]
     public string MonsterName; // If needed
-    [Range(1, 3)]public int health;
-    [Range(0.4f, 4f)] public float moveSpeed;    
+    [Range(1, 3)] public int health;
+    [Range(0.4f, 4f)] public float moveSpeed;
     [HideInInspector] public string elementalName;
     [HideInInspector] public new Rigidbody2D rigidbody;
     public GameObject coinPrefab;
+    [HideInInspector] public bool IsDead;
+
 
     [Header(header: "Visual effects")]
     public GameObject elementalShadow;
@@ -141,6 +143,7 @@ public class Monster : MonoBehaviour
         shake.CamShake();
         if (health <= 0)
         {
+            IsDead = true;
             FindObjectOfType<GameMaster>().MonsterDeath();
             SpawnCoin();
             Instantiate(explosionParticles, transform.position, transform.rotation);
