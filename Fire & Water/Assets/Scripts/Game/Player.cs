@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
 
     // Skills ->
     private KeyCode multiShootKey;
+    public Skill[] skills = new Skill[0];
     #endregion
 
     #region Functions
@@ -59,8 +60,26 @@ public class Player : MonoBehaviour
             currentTimeToShoot += Time.deltaTime;
         }
         shootBar.SetValue(currentTimeToShoot);
+
+        for(int i = 0; i < skills.Length; ++i)
+        {
+            if(skills[i].IsBought.Equals(true))
+            {
+                if (skills[i].IsReady.Equals(false))
+                {
+                    skills[i].Update();
+                }
+                if(skills[i].currentCooldown < 0)
+                {
+                    skills[i].IsReady = true;
+                }
+            }
+        }
+
         ManaScript();
+
         PlayerInput();
+
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
         Animate();
         gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
@@ -75,8 +94,8 @@ public class Player : MonoBehaviour
     {
         manaBar.SetValue(mana);
 
-        var ceilMana = Mathf.Ceil(mana);
-        manaText.text = ceilMana.ToString() + '/' + maxMana.ToString();
+        var roundedMana = Mathf.Round(mana);
+        manaText.text = roundedMana.ToString() + '/' + maxMana.ToString();
         if (mana < maxMana)
         {
             currentTimeManaRegen += Time.deltaTime;
@@ -134,9 +153,11 @@ public class Player : MonoBehaviour
                 currentTimeToShoot = 0f;
             }
         }
-        else if(Input.GetKeyUp(multiShootKey))
+        else if(Input.GetKeyUp(multiShootKey) && skills[(int)SkillsIndex.MULTI_SHOOT].IsReady.Equals(true))
         {
             MultiShoot(20);
+            skills[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
+            skills[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = skills[(int)SkillsIndex.MULTI_SHOOT].cooldown;
         }
         else if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -190,13 +211,12 @@ public class Player : MonoBehaviour
                 bullet[i].transform.rotation = transform.rotation;
             }
             var rotationValue = 10f;
-            Debug.Log(transform.rotation.y);
-            if (transform.rotation.y == 0)
+            if (transform.rotation.y == 0) // if right
             {
                 bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
                 bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
             }
-            else if (transform.rotation.y == 1)
+            else if (transform.rotation.y == 1) // if left
             {
                 bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
                 bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
@@ -205,4 +225,27 @@ public class Player : MonoBehaviour
     }
 
     #endregion
+}
+
+[CreateAssetMenu(menuName = "Create Skill")]
+public class Skill : ScriptableObject
+{
+    public string skillName;
+    public float cooldown = 5.0f;
+    public float currentCooldown = 0f;
+    public bool IsReady = false;
+    public bool IsBought = true;
+
+    public void Update()
+    {
+        Debug.Log(skillName + ':' + currentCooldown);
+        if(IsReady.Equals(false))
+        {
+            currentCooldown -= Time.deltaTime;
+            if(currentCooldown < 0)
+            {
+                IsReady = true;
+            }
+        }
+    }
 }

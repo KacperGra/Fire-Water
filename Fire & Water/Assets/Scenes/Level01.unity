@@ -4128,6 +4128,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5176396825561102431, guid: 2266ca94417e75041b3dd44a77cb521f,
     type: 3}
   shootBar: {fileID: 231529356}
+  skills:
+  - {fileID: 11400000, guid: 394f98ab0f7e71d478ea4a99fa67d51c, type: 2}
 --- !u!61 &1101009759
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5559,6 +5561,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1775590703418911755, guid: 509d451125204124e947a7dd02c61e15,
     type: 3}
   shootBar: {fileID: 422752692}
+  skills:
+  - {fileID: 11400000, guid: 394f98ab0f7e71d478ea4a99fa67d51c, type: 2}
 --- !u!61 &1652057811
 BoxCollider2D:
   m_ObjectHideFlags: 0
