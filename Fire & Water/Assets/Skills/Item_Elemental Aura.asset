@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Multi Shoot
-  m_EditorClassIdentifier: Assembly-CSharp::Skill
-  cooldown: 5
-  currentCooldown: -0.0016258499
-  manaCost: 15
-  IsReady: 1
-  IsBought: 1
+  m_Script: {fileID: 11500000, guid: 956ad7a5181a595448e6b0fc3f751082, type: 3}
+  m_Name: Item_Elemental Aura
+  m_EditorClassIdentifier: 
+  itemName: Elemental Aura
+  cost: 100
+  image: {fileID: 0}
