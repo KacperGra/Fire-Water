@@ -36,8 +36,9 @@ public class Player : MonoBehaviour
     private KeyCode shootKey;
 
     // Skills ->
-    private KeyCode multiShootKey;
-    public Skill[] skills = new Skill[0];
+    public Skill[] skill = new Skill[0]; 
+    private KeyCode Q_Skill;
+    
     #endregion
 
     #region Functions
@@ -61,17 +62,17 @@ public class Player : MonoBehaviour
         }
         shootBar.SetValue(currentTimeToShoot);
 
-        for(int i = 0; i < skills.Length; ++i)
+        for(int i = 0; i < skill.Length; ++i)
         {
-            if(skills[i].IsBought.Equals(true))
+            if(skill[i].IsBought.Equals(true))
             {
-                if (skills[i].IsReady.Equals(false))
+                if (skill[i].IsReady.Equals(false))
                 {
-                    skills[i].Update();
+                    skill[i].Update();
                 }
-                if(skills[i].currentCooldown < 0)
+                if(skill[i].currentCooldown < 0)
                 {
-                    skills[i].IsReady = true;
+                    skill[i].IsReady = true;
                 }
             }
         }
@@ -124,14 +125,14 @@ public class Player : MonoBehaviour
             horizontalMoveName = "P1_Horizontal";
             vericalMoveName = "P1_Vertical";
             shootKey = KeyCode.G;
-            multiShootKey = KeyCode.Q;
+            Q_Skill = KeyCode.Q;
         }
         else if (playerName.Equals("Water"))
         {
             horizontalMoveName = "P2_Horizontal";
             vericalMoveName = "P2_Vertical";
             shootKey = KeyCode.Keypad1;
-            multiShootKey = KeyCode.Keypad2;
+            Q_Skill = KeyCode.Keypad2;
         }
     }
 
@@ -153,15 +154,18 @@ public class Player : MonoBehaviour
                 currentTimeToShoot = 0f;
             }
         }
-        else if(Input.GetKeyUp(multiShootKey) && skills[(int)SkillsIndex.MULTI_SHOOT].IsReady.Equals(true))
-        {
-            MultiShoot(20);
-            skills[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
-            skills[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = skills[(int)SkillsIndex.MULTI_SHOOT].cooldown;
-        }
-        else if(Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainMenu");
+        }
+
+        // Skill Input section ->
+        var multiShoot = skill[(int)SkillsIndex.MULTI_SHOOT];
+        if(Input.GetKeyUp(Q_Skill) && multiShoot.IsReady.Equals(true))
+        {
+            MultiShoot(multiShoot.manaCost);
+            skill[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
+            skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = multiShoot.cooldown;
         }
     }
 
@@ -230,15 +234,14 @@ public class Player : MonoBehaviour
 [CreateAssetMenu(menuName = "Create Skill")]
 public class Skill : ScriptableObject
 {
-    public string skillName;
-    public float cooldown = 5.0f;
-    public float currentCooldown = 0f;
-    public bool IsReady = false;
-    public bool IsBought = true;
+    public float cooldown;
+    public float currentCooldown;
+    public float manaCost;
+    public bool IsReady;
+    public bool IsBought;
 
     public void Update()
     {
-        Debug.Log(skillName + ':' + currentCooldown);
         if(IsReady.Equals(false))
         {
             currentCooldown -= Time.deltaTime;

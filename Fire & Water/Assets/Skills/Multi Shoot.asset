@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: MultiShoot
+  m_Name: Multi Shoot
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: Multi Shoot
+  SkillName: Multi Shoot
   cooldown: 5
-  currentCooldown: -0.0070452727
+  currentCooldown: -0.004044852
+  manaCost: 15
   IsReady: 1
+  IsBought: 1

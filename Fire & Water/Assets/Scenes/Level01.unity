@@ -1232,7 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+  m_Color: {r: 0, g: 0.021637613, b: 0.23584908, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1240,7 +1240,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 50ee93d339103a34aa6af4bfdb5cebec, type: 3}
-    m_FontSize: 22
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2074,7 +2074,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4119,7 +4119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Water
-  moveSpeed: 4
+  moveSpeed: 3
   health: 6
   manaBar: {fileID: 476262649}
   mana: 0
@@ -4128,7 +4128,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5176396825561102431, guid: 2266ca94417e75041b3dd44a77cb521f,
     type: 3}
   shootBar: {fileID: 231529356}
-  skills:
+  skill:
   - {fileID: 11400000, guid: 394f98ab0f7e71d478ea4a99fa67d51c, type: 2}
 --- !u!61 &1101009759
 BoxCollider2D:
@@ -5552,7 +5552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Fire
-  moveSpeed: 4
+  moveSpeed: 3
   health: 6
   manaBar: {fileID: 130993570}
   mana: 0
@@ -5561,7 +5561,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1775590703418911755, guid: 509d451125204124e947a7dd02c61e15,
     type: 3}
   shootBar: {fileID: 422752692}
-  skills:
+  skill:
   - {fileID: 11400000, guid: 394f98ab0f7e71d478ea4a99fa67d51c, type: 2}
 --- !u!61 &1652057811
 BoxCollider2D:
@@ -5833,7 +5833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+  m_Color: {r: 0, g: 0.021637613, b: 0.23584908, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5841,7 +5841,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 50ee93d339103a34aa6af4bfdb5cebec, type: 3}
-    m_FontSize: 22
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -7352,6 +7352,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445692998404201045, guid: 884d1db4e90f3ef4d9d07a2965854fb0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.5357997
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445692998404201045, guid: 884d1db4e90f3ef4d9d07a2965854fb0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.9464998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445692998404201045, guid: 884d1db4e90f3ef4d9d07a2965854fb0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1786
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 884d1db4e90f3ef4d9d07a2965854fb0, type: 3}
