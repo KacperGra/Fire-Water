@@ -14,15 +14,19 @@ public class Player : MonoBehaviour
     [HideInInspector] public int health;
     private readonly int maxHealth = 6;
     public Bar manaBar;
-    [HideInInspector] public int mana;
-    private readonly int maxMana = 100;
+    [HideInInspector] public float mana;
+    private readonly float maxMana = 100f;
+    private readonly float manaRegenValue = 0.5f;
+    private readonly float timeManaRegen = 0.25f;
+    private float currentTimeManaRegen = 0f;
+    public Text manaText;
 
     [Header(header: "Shooting")]    
     public Transform shootPoint;
     public GameObject bulletPrefab;
     public Bar shootBar;
     bool isShooting = false; // Variable for holding shoot button and then shoot
-    private readonly float timeToShoot = 1.2f;
+    private readonly float timeToShoot = 2.5f;
     private float currentTimeToShoot;
 
     // Input
@@ -30,6 +34,8 @@ public class Player : MonoBehaviour
     private string horizontalMoveName;
     private string vericalMoveName;
     private KeyCode shootKey;
+
+    // Skills ->
     private KeyCode multiShootKey;
     #endregion
 
@@ -48,8 +54,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        currentTimeToShoot += Time.deltaTime;
+        if (isShooting.Equals(false))
+        {
+            currentTimeToShoot += Time.deltaTime;
+        }
         shootBar.SetValue(currentTimeToShoot);
+        ManaScript();
         PlayerInput();
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
         Animate();
@@ -59,6 +69,23 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed);  
+    }
+
+    void ManaScript()
+    {
+        manaBar.SetValue(mana);
+
+        var ceilMana = Mathf.Ceil(mana);
+        manaText.text = ceilMana.ToString() + '/' + maxMana.ToString();
+        if (mana < maxMana)
+        {
+            currentTimeManaRegen += Time.deltaTime;
+            if (currentTimeManaRegen > timeManaRegen)
+            {
+                mana += manaRegenValue;
+                currentTimeManaRegen = 0;
+            }
+        }
     }
 
     public void TakeDamage()
@@ -107,11 +134,11 @@ public class Player : MonoBehaviour
                 currentTimeToShoot = 0f;
             }
         }
-        if(Input.GetKeyUp(multiShootKey))
+        else if(Input.GetKeyUp(multiShootKey))
         {
-            MultiShoot();
+            MultiShoot(20);
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        else if(Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -148,29 +175,34 @@ public class Player : MonoBehaviour
             animator.SetFloat("Speed", 0f);
         }
 
-    }
-    #endregion
+    }  
 
-    void MultiShoot()
+    void MultiShoot(float _manaCost)
     {
-        GameObject[] bullet = new GameObject[3];
-        for(int i = 0; i < 3; ++i)
+        if (mana - _manaCost >= 0)
         {
-            bullet[i] = Instantiate(bulletPrefab) as GameObject;
-            bullet[i].transform.position = shootPoint.position;
-            bullet[i].transform.rotation = transform.rotation;
-        }
-        var rotationValue = 10f;
-        Debug.Log(transform.rotation.y);
-        if(transform.rotation.y == 0)
-        {
-            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
-            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
-        }
-        else if (transform.rotation.y == 1)
-        {
-            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
-            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
-        }
+            mana -= _manaCost;
+            GameObject[] bullet = new GameObject[3];
+            for (int i = 0; i < 3; ++i)
+            {
+                bullet[i] = Instantiate(bulletPrefab) as GameObject;
+                bullet[i].transform.position = shootPoint.position;
+                bullet[i].transform.rotation = transform.rotation;
+            }
+            var rotationValue = 10f;
+            Debug.Log(transform.rotation.y);
+            if (transform.rotation.y == 0)
+            {
+                bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
+                bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
+            }
+            else if (transform.rotation.y == 1)
+            {
+                bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
+                bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
+            }
+        }  
     }
+
+    #endregion
 }

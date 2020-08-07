@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public string elementalName;
     [Header(header:"Movement")]
     private float moveSpeed = 15f;
+    [HideInInspector] public float timeToDestroy = .75f;
 
     [Header(header:"Particles")]
     // Fly particles
@@ -22,7 +23,7 @@ public class Bullet : MonoBehaviour
         }
         InvokeRepeating("FlyParticles", 0f, .25f);
 
-        Invoke("Explosion", .75f);
+        Invoke("Explosion", timeToDestroy);
     }
 
     private void Update()
