@@ -118,13 +118,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2274e532058c1448becf39b58e473a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterName: 
+  MonsterName: Slime
   health: 1
   moveSpeed: 1
   elementalName: 
   rigidbody: {fileID: 0}
   coinPrefab: {fileID: 1062052368970308576, guid: 80e9c3875f6a70540baf576638350700,
     type: 3}
+  coinBagPrefab: {fileID: 6353004337507134461, guid: 6b45c8ffbb73ab04aa0b791c432b39c9,
+    type: 3}
+  IsDead: 0
   elementalShadow: {fileID: 9057070696712408561}
   explosionParticles: {fileID: 2507594327351407188, guid: 0ef67df080dff1142897b8180866e9f6,
     type: 3}

@@ -11,7 +11,7 @@ public class GameMaster : MonoBehaviour
 
     [Header("UI")]
     public Text coinNumberText;
-    [HideInInspector] public int coinNumber;
+    [HideInInspector] public int coinsNumber;
     public Text monsterNumberText;
     [HideInInspector] public int monsterNumber;
     public Text killedMonstersNumberText;
@@ -21,7 +21,7 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        coinNumber = 0;
+        coinsNumber = 0;
         monsterNumber = 0;
         killedMonstersNumber = 0;
         IgnoreCollisionsInit();
@@ -30,7 +30,7 @@ public class GameMaster : MonoBehaviour
 
     private void Update()
     {
-        coinNumberText.text = coinNumber.ToString();
+        coinNumberText.text = coinsNumber.ToString();
         monsterNumberText.text = monsterNumber.ToString();
         killedMonstersNumberText.text = killedMonstersNumber.ToString();
         if (Input.GetKeyDown(KeyCode.B))
@@ -61,9 +61,9 @@ public class GameMaster : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Decoration"), LayerMask.NameToLayer("Monster"));
     }
 
-    public void PickCoin()
+    public void PickCoin(int _value)
     {
-        ++coinNumber;
+        coinsNumber += _value;
     }
 
     public void MonsterDeath()

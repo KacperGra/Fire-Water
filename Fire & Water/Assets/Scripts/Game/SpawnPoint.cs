@@ -9,7 +9,7 @@ public class SpawnPoint : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnMonster", 0f, timeToSpawn);
+        InvokeRepeating("SpawnMonster", timeToSpawn, timeToSpawn);
     }
 
     private void SpawnMonster()

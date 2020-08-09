@@ -10,13 +10,15 @@ public class Monster : MonoBehaviour
     private readonly Transform[] player = new Transform[numberOfPlayers];
     private Vector2 direction;
     [Header(header: "Details")]
-    public string MonsterName; // If needed
+    public string MonsterName;
     [Range(1, 3)] public int health;
     [Range(0.4f, 4f)] public float moveSpeed;
     [HideInInspector] public string elementalName;
     [HideInInspector] public new Rigidbody2D rigidbody;
     public GameObject coinPrefab;
+    public GameObject coinBagPrefab;
     [HideInInspector] public bool IsDead;
+    private int coinsNumber;
 
 
     [Header(header: "Visual effects")]
@@ -131,10 +133,37 @@ public class Monster : MonoBehaviour
             player[i] = players[i].transform;
         }
 
+
         if (MonsterName.Equals("Cowboy"))
         {
             InvokeRepeating("Shoot", 1.5f, 3.5f);
         }
+
+        var T1_CoinsNumber = Random.Range(1, 5);
+        switch(MonsterName)
+        {
+            case "Slime":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Eye Monster":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Zombie":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Big Mouth":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Ball Monster":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Bomb Monster":
+                coinsNumber = T1_CoinsNumber;
+                break;
+            case "Cowboy":
+                coinsNumber = T1_CoinsNumber;
+                break;
+        }  
     }
 
     public void TakeDamage(int _damage)
@@ -153,8 +182,34 @@ public class Monster : MonoBehaviour
 
     void SpawnCoin()
     {
-        var coin = Instantiate(coinPrefab) as GameObject;
-        coin.transform.position = transform.position;
+        var bagWithCoinsCapacity = 30;
+        if(coinsNumber > bagWithCoinsCapacity)
+        {
+            var bagsNumber = coinsNumber / bagWithCoinsCapacity;
+            for (int i = 0; i < bagsNumber; ++i)
+            {
+                var coinBag = Instantiate(coinBagPrefab) as GameObject;
+                coinBag.transform.position = transform.position;
+                var bagsRangeX = bagsNumber * 0.3f;
+                if(bagsNumber > 1)
+                {
+                    coinBag.transform.position += new Vector3(Random.Range(-bagsRangeX, bagsRangeX), Random.Range(-0.25f, 0.25f));
+                }
+                coinBag.gameObject.GetComponent<Coin>().SetCoinValue(bagWithCoinsCapacity);
+            }   
+        }
+        var otherCoins = coinsNumber % bagWithCoinsCapacity;
+        for (int i = 0; i < otherCoins; ++i)
+        {
+            var coin = Instantiate(coinPrefab) as GameObject;
+            coin.transform.position = transform.position;
+            coin.gameObject.GetComponent<Coin>().SetCoinValue(1);
+            if (otherCoins > 1)
+            {
+                var coinsRangeX = otherCoins * 0.025f;
+                coin.transform.position += new Vector3(Random.Range(-coinsRangeX, coinsRangeX), Random.Range(-0.25f, 0.25f));
+            }
+        }
     }
 
     void SelectCloserTarget()

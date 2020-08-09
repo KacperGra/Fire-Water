@@ -6,9 +6,9 @@ public class Coin : MonoBehaviour
 {
     public GameObject pickParticles;
     public Animator coinAnimator;
-    public SpriteRenderer coinSprite;
-    public SpriteRenderer LightSpirte;
     private float coinLifetime;
+
+    private int coinValue;
 
     private void Start()
     {
@@ -16,13 +16,18 @@ public class Coin : MonoBehaviour
         StartCoroutine(StartAnimation());
 
         coinLifetime = 15f;
-        Invoke("Explosion", coinLifetime);
+        Invoke("ExplosionOnDestroy", coinLifetime);
     }
 
     IEnumerator StartAnimation()
     {
-        yield return new WaitForSeconds(.834f);
+        yield return new WaitForSeconds(1f);
         coinAnimator.SetTrigger("IntroEnd");
+    }
+
+    public void SetCoinValue(int _value)
+    {
+        coinValue = _value;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,14 +35,13 @@ public class Coin : MonoBehaviour
         Player player = collision.GetComponent<Player>();
         if(player != null)
         {
-            FindObjectOfType<GameMaster>().PickCoin();
-
+            FindObjectOfType<GameMaster>().PickCoin(coinValue);
             
-            Explosion(); // <- Destroy
+            ExplosionOnDestroy(); // <- Destroy
         }
     }
 
-    public void Explosion()
+    public void ExplosionOnDestroy()
     {
         Instantiate(pickParticles, transform.position, transform.rotation);
         Destroy(gameObject);
