@@ -206,7 +206,7 @@ public class Monster : MonoBehaviour
             coin.gameObject.GetComponent<Coin>().SetCoinValue(1);
             if (otherCoins > 1)
             {
-                var coinsRangeX = otherCoins * 0.025f;
+                var coinsRangeX = otherCoins * 0.08f;
                 coin.transform.position += new Vector3(Random.Range(-coinsRangeX, coinsRangeX), Random.Range(-0.25f, 0.25f));
             }
         }

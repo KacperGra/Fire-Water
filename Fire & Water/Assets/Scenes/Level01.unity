@@ -3412,7 +3412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bad10cd555a868468a29fd7e5c5697c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: ae06ab795c36dd740baeb1b83bb972f3, type: 2}
+  item: {fileID: 11400000, guid: 826dce1626c5ec647af4903c4d22b6ad, type: 2}
   nameText: {fileID: 184862686}
   image: {fileID: 217078647}
   costText: {fileID: 518855678}
