@@ -2,3 +2,4 @@
 - 2 Players CO-OP experience
 - Unity 2D
 - Simple Graphics and dark theme
+- (soon) Android Support
