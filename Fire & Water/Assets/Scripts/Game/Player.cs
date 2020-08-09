@@ -161,11 +161,10 @@ public class Player : MonoBehaviour
 
         // Skill Input section ->
         var multiShoot = skill[(int)SkillsIndex.MULTI_SHOOT];
+
         if(Input.GetKeyUp(Q_Skill) && multiShoot.IsReady.Equals(true))
         {
-            MultiShoot(multiShoot.manaCost);
-            skill[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
-            skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = multiShoot.cooldown;
+            UseSkill((int)SkillsIndex.MULTI_SHOOT, multiShoot.manaCost); 
         }
     }
 
@@ -202,30 +201,42 @@ public class Player : MonoBehaviour
 
     }  
 
-    void MultiShoot(float _manaCost)
+    void UseSkill(int skillIndex, float _manaCost)
     {
         if (mana - _manaCost >= 0)
         {
+            skill[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
+            skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = skill[(int)SkillsIndex.MULTI_SHOOT].cooldown;
             mana -= _manaCost;
-            GameObject[] bullet = new GameObject[3];
-            for (int i = 0; i < 3; ++i)
+            switch (skillIndex)
             {
-                bullet[i] = Instantiate(bulletPrefab) as GameObject;
-                bullet[i].transform.position = shootPoint.position;
-                bullet[i].transform.rotation = transform.rotation;
+                case 0:
+                    MultiShoot();
+                    break;
             }
-            var rotationValue = 10f;
-            if (transform.rotation.y == 0) // if right
-            {
-                bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
-                bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
-            }
-            else if (transform.rotation.y == 1) // if left
-            {
-                bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
-                bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
-            }
-        }  
+        }
+    }
+
+    void MultiShoot()
+    {
+        GameObject[] bullet = new GameObject[3];
+        for (int i = 0; i < 3; ++i)
+        {
+            bullet[i] = Instantiate(bulletPrefab) as GameObject;
+            bullet[i].transform.position = shootPoint.position;
+            bullet[i].transform.rotation = transform.rotation;
+        }
+        var rotationValue = 10f;
+        if (transform.rotation.y == 0) // if right
+        {
+            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, rotationValue));
+            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, -rotationValue));
+        }
+        else if (transform.rotation.y == 1) // if left
+        {
+            bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
+            bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
+        }
     }
 
     #endregion

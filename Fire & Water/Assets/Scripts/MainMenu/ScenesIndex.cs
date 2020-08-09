@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SceneIndexes
+public enum ScenesIndex
 {
     MAIN_MENU,
     LEVEL_01

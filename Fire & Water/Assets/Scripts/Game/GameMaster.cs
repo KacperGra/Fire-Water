@@ -79,6 +79,6 @@ public class GameMaster : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
     }
 }
