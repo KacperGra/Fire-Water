@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour
 {
     public bool testMode;
-
+    public bool androidBuild;
 
     [Header("UI")]
     public Text coinNumberText;

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     #region Variables
     private Animator animator;
+    public Joystick joystick;
     [Header(header: "Details")]
     public string playerName;
     public float moveSpeed;
@@ -25,7 +26,6 @@ public class Player : MonoBehaviour
     public Transform shootPoint;
     public GameObject bulletPrefab;
     public Bar shootBar;
-    bool isShooting = false; // Variable for holding shoot button and then shoot
     private readonly float timeToShoot = 2.5f;
     private float currentTimeToShoot;
 
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (isShooting.Equals(false))
+        if(currentTimeToShoot < timeToShoot)
         {
             currentTimeToShoot += Time.deltaTime;
         }
@@ -79,15 +79,25 @@ public class Player : MonoBehaviour
 
         ManaScript();
 
-        PlayerInput();
+        if(FindObjectOfType<GameMaster>().androidBuild.Equals(false))
+        {
+            PC_PlayerInput();
+            Animate();
+        }
+        
 
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
-        Animate();
+        
         gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
     }
 
     private void FixedUpdate()
     {
+        if (FindObjectOfType<GameMaster>().androidBuild.Equals(true))
+        {
+            Android_PlayerInput();
+            Animate();
+        }  
         transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed);  
     }
 
@@ -136,23 +146,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    void PlayerInput()
-    {       
-        if(currentTimeToShoot > timeToShoot)
-        {
-            if (Input.GetKeyDown(shootKey) && isShooting.Equals(false))
-            {
-                isShooting = true;
-            }
-        }
+    void PC_PlayerInput()
+    {
         if(Input.GetKeyUp(shootKey))
         {
-            if(isShooting.Equals(true))
-            {
-                Shoot();
-                isShooting = false;
-                currentTimeToShoot = 0f;
-            }
+            Shoot();    
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -164,15 +162,48 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyUp(Q_Skill) && multiShoot.IsReady.Equals(true))
         {
-            UseSkill((int)SkillsIndex.MULTI_SHOOT, multiShoot.manaCost); 
+            UseSkill("Multi Shoot"); 
         }
     }
 
-    void Shoot()
+    void Android_PlayerInput()
     {
-        var bullet = Instantiate(bulletPrefab) as GameObject;
-        bullet.transform.position = shootPoint.position;
-        bullet.transform.rotation = transform.rotation;
+        var joystickSensitivity = .1f;
+        if (joystick.Horizontal >= joystickSensitivity)
+        {
+            movementInput.x = 1f;
+        }
+        else if (joystick.Horizontal <= -joystickSensitivity)
+        {
+            movementInput.x = -1f;
+        }
+        else
+        {
+            movementInput.x = 0f;
+        }
+        if (joystick.Vertical >= joystickSensitivity)
+        {
+            movementInput.y = 1f;
+        }
+        else if (joystick.Vertical <= -joystickSensitivity)
+        {
+            movementInput.y = -1f;
+        }
+        else
+        {
+            movementInput.y = 0f;
+        }
+    }
+
+    public void Shoot()
+    {
+        if(currentTimeToShoot >= timeToShoot)
+        {
+            currentTimeToShoot = 0f;
+            var bullet = Instantiate(bulletPrefab) as GameObject;
+            bullet.transform.position = shootPoint.position;
+            bullet.transform.rotation = transform.rotation;
+        }    
     }
 
     private void Animate()
@@ -201,23 +232,26 @@ public class Player : MonoBehaviour
 
     }  
 
-    void UseSkill(int skillIndex, float _manaCost)
+    public void UseSkill(string skillName)
     {
-        if (mana - _manaCost >= 0)
+        int skillIndex = 0;
+        if(skillName.Equals("Multi Shoot"))
         {
-            skill[(int)SkillsIndex.MULTI_SHOOT].IsReady = false;
-            skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown = skill[(int)SkillsIndex.MULTI_SHOOT].cooldown;
-            mana -= _manaCost;
-            switch (skillIndex)
+            skillIndex = (int)SkillsIndex.MULTI_SHOOT;
+        }
+        if (skill[skillIndex].currentCooldown < 0)
+        {
+            if (mana - skill[skillIndex].manaCost >= 0)
             {
-                case 0:
-                    MultiShoot();
-                    break;
+                skill[skillIndex].IsReady = false;
+                skill[skillIndex].currentCooldown = skill[skillIndex].cooldown;
+                mana -= skill[skillIndex].manaCost;
+                MultiShoot();
             }
         }
     }
 
-    void MultiShoot()
+    public void MultiShoot()
     {
         GameObject[] bullet = new GameObject[3];
         for (int i = 0; i < 3; ++i)
