@@ -67,6 +67,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        var cooldownValue = Mathf.Round(skills[0].currentCooldown * 10f) / 10f;
+
+
+        if (skills[0].currentCooldown >= 0)
+        {
+            skills[0].currentCooldown -= Time.deltaTime;
+            skill_1Text.text = cooldownValue.ToString() + '|' + skills[0].cooldown;
+
+        }
+        else
+        {
+            skill_1Text.text = "READY!"; 
+        }
+
+
         if(currentTimeToShoot < timeToShoot)
         {
             currentTimeToShoot += Time.deltaTime;
@@ -82,8 +97,15 @@ public class Player : MonoBehaviour
             Animate();
         } 
         
-
-        movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
+        if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
+        {
+            movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));
+        }
+        else
+        {
+            movementInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+        }
+        
         
         gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
     }
@@ -93,9 +115,9 @@ public class Player : MonoBehaviour
         if (FindObjectOfType<GameMaster>().androidMode.Equals(true))
         {
             Android_PlayerInput();
-            Animate();
+            Animate();    
         }  
-        transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed);  
+        transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed); 
     }
 
     void ManaScript()
@@ -163,31 +185,6 @@ public class Player : MonoBehaviour
 
     void Android_PlayerInput()
     {
-        var joystickSensitivity = .1f;
-        if (joystick.Horizontal >= joystickSensitivity)
-        {
-            movementInput.x = 1f;
-        }
-        else if (joystick.Horizontal <= -joystickSensitivity)
-        {
-            movementInput.x = -1f;
-        }
-        else
-        {
-            movementInput.x = 0f;
-        }
-        if (joystick.Vertical >= joystickSensitivity)
-        {
-            movementInput.y = 1f;
-        }
-        else if (joystick.Vertical <= -joystickSensitivity)
-        {
-            movementInput.y = -1f;
-        }
-        else
-        {
-            movementInput.y = 0f;
-        }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
@@ -231,6 +228,16 @@ public class Player : MonoBehaviour
 
     }  
 
+    public void AndroidInput(string _skillName)
+    {
+        switch(_skillName)
+        {
+            case "Multi Shoot":
+                UseSkill(PlayerSkills.SkillType.MULTI_SHOOT);
+                break;
+        }
+    }
+
     void UseSkill(PlayerSkills.SkillType _skillType)
     {
         if(playerSkills.IsSkillUnlocked(_skillType))
@@ -239,7 +246,13 @@ public class Player : MonoBehaviour
             {
                 if(mana - skills[(int)_skillType].manaCost >= 0)
                 {
-                    mana -= skills[]
+                    if(skills[(int)_skillType].currentCooldown <= 0)
+                    {
+                        mana -= skills[(int)_skillType].manaCost;
+                        skills[(int)_skillType].currentCooldown = skills[(int)_skillType].cooldown;
+                        MultiShoot();
+                    }
+                    
                 }
             }
         }
