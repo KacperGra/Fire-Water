@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    private Animator animator;
+    // Animation
+    [HideInInspector] public Animator animator;
+
+    // Android UI / Input
     [Header(header:"Android")]
     public GameObject androidUI;
     public Joystick joystick;
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
     private float currentTimeToShoot;
 
     // Input
-    private Vector2 movementInput;
+    [HideInInspector] public Vector2 movementInput;
     private string horizontalMoveName;
     private string vericalMoveName;
     private KeyCode shootKey;
@@ -63,20 +66,34 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         currentTimeToShoot = timeToShoot; // Player need to have ready shot at start of the game 
         shootBar.SetMaxValue(timeToShoot);
-        Init();
+        InputInit();
+    }
+
+    void InputInit()
+    {
+        if (playerName.Equals("Fire"))
+        {
+            horizontalMoveName = "P1_Horizontal";
+            vericalMoveName = "P1_Vertical";
+            shootKey = KeyCode.G;
+            Q_Skill = KeyCode.Q;
+        }
+        else if (playerName.Equals("Water"))
+        {
+            horizontalMoveName = "P2_Horizontal";
+            vericalMoveName = "P2_Vertical";
+            shootKey = KeyCode.Keypad1;
+            Q_Skill = KeyCode.Keypad2;
+        }
     }
 
     void Update()
     {
         ManaScript();
+        UI_Update();
+        PlayerInput();
 
-        if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
-        {
-            PC_PlayerInput();
-            Animate();
-        } 
-        
-        if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
+        if (FindObjectOfType<GameMaster>().androidMode.Equals(false))
         {
             movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));
         }
@@ -87,6 +104,11 @@ public class Player : MonoBehaviour
         
         
         gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed); 
     }
 
     void UI_Update()
@@ -104,22 +126,11 @@ public class Player : MonoBehaviour
             skill_1Text.text = "READY!";
         }
 
-
         if (currentTimeToShoot < timeToShoot)
         {
             currentTimeToShoot += Time.deltaTime;
         }
         shootBar.SetValue(currentTimeToShoot);
-    }
-
-    private void FixedUpdate()
-    {
-        if (FindObjectOfType<GameMaster>().androidMode.Equals(true))
-        {
-            Android_PlayerInput();
-            Animate();    
-        }  
-        transform.position += new Vector3(movementInput.x * Time.fixedDeltaTime * moveSpeed, movementInput.y * Time.fixedDeltaTime * moveSpeed); 
     }
 
     void ManaScript()
@@ -149,25 +160,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Init()
-    {
-        if (playerName.Equals("Fire"))
-        {
-            horizontalMoveName = "P1_Horizontal";
-            vericalMoveName = "P1_Vertical";
-            shootKey = KeyCode.G;
-            Q_Skill = KeyCode.Q;
-        }
-        else if (playerName.Equals("Water"))
-        {
-            horizontalMoveName = "P2_Horizontal";
-            vericalMoveName = "P2_Vertical";
-            shootKey = KeyCode.Keypad1;
-            Q_Skill = KeyCode.Keypad2;
-        }
-    }
-
-    void PC_PlayerInput()
+    void PlayerInput()
     {
         if(Input.GetKeyUp(shootKey))
         {
@@ -185,14 +178,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Android_PlayerInput()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
-        }
-    }
-
     public void Shoot()
     {
         if(currentTimeToShoot >= timeToShoot)
@@ -204,33 +189,7 @@ public class Player : MonoBehaviour
         }    
     }
 
-    private void Animate()
-    {
-        if (movementInput.x != 0)
-        {
-            animator.SetFloat("Speed", Mathf.Abs(movementInput.x));
-            if(movementInput.x > 0)
-            {
-                transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-
-            }
-            else if (movementInput.x < 0)
-            {
-                transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-            }
-        }
-        else if(movementInput.y != 0)
-        {
-            animator.SetFloat("Speed", Mathf.Abs(movementInput.y));
-        }
-        else
-        {
-            animator.SetFloat("Speed", 0f);
-        }
-
-    }  
-
-    public void AndroidInput(string _skillName)
+    public void AndroidButtonsInput(string _skillName)
     {
         switch(_skillName)
         {
