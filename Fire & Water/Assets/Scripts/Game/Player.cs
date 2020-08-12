@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    #region Variables
     private Animator animator;
     [Header(header:"Android")]
     public GameObject androidUI;
@@ -39,14 +38,18 @@ public class Player : MonoBehaviour
     private KeyCode shootKey;
 
     // Skills ->
-    public Skill[] skill = new Skill[0]; 
-    private KeyCode Q_Skill;
-    
-    #endregion
+    public List<Skill> skills = new List<Skill>();
 
-    #region Functions
+    private PlayerSkills playerSkills;
+    private KeyCode Q_Skill;  
+
+
     void Start()
     {
+        playerSkills = new PlayerSkills();
+        playerSkills.UnlockSkill(PlayerSkills.SkillType.MULTI_SHOOT);
+
+
         if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
         {
             androidUI.SetActive(false);
@@ -69,21 +72,7 @@ public class Player : MonoBehaviour
             currentTimeToShoot += Time.deltaTime;
         }
         shootBar.SetValue(currentTimeToShoot);
-
-        for(int i = 0; i < skill.Length; ++i)
-        {
-            if(skill[i].IsBought.Equals(true))
-            {
-                if (skill[i].IsReady.Equals(false))
-                {
-                    skill[i].Update();
-                }
-                if(skill[i].currentCooldown < 0)
-                {
-                    skill[i].IsReady = true;
-                }
-            }
-        }
+        
 
         ManaScript();
 
@@ -91,17 +80,7 @@ public class Player : MonoBehaviour
         {
             PC_PlayerInput();
             Animate();
-        }
-
-        if(skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown > 0)
-        {
-            var cooldown = (Mathf.Ceil(skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown * 10f) / 10f);
-            skill_1Text.text = "Multi Shoot\n" + "Time: " + cooldown;
-        }
-        else
-        {
-            skill_1Text.text = "Multi Shoot\n" + "READY";
-        }    
+        } 
         
 
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
@@ -175,12 +154,10 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
         }
 
-        // Skill Input section ->
-        var multiShoot = skill[(int)SkillsIndex.MULTI_SHOOT];
 
-        if(Input.GetKeyUp(Q_Skill) && multiShoot.IsReady.Equals(true))
+        if(Input.GetKeyUp(Q_Skill))
         {
-            //UseSkill("Multi Shoot"); 
+            UseSkill(PlayerSkills.SkillType.MULTI_SHOOT);
         }
     }
 
@@ -254,21 +231,16 @@ public class Player : MonoBehaviour
 
     }  
 
-    public void UseSkill()
+    void UseSkill(PlayerSkills.SkillType _skillType)
     {
-        int skillIndex = 0;
-        /*if(skillName.Equals("Multi Shoot"))
+        if(playerSkills.IsSkillUnlocked(_skillType))
         {
-            skillIndex = (int)SkillsIndex.MULTI_SHOOT;
-        }*/
-        if (skill[skillIndex].currentCooldown < 0)
-        {
-            if (mana - skill[skillIndex].manaCost >= 0)
+            if(skills[(int)_skillType].IsReady.Equals(true))
             {
-                skill[skillIndex].IsReady = false;
-                skill[skillIndex].currentCooldown = skill[skillIndex].cooldown;
-                mana -= skill[skillIndex].manaCost;
-                MultiShoot();
+                if(mana - skills[(int)_skillType].manaCost >= 0)
+                {
+                    mana -= skills[]
+                }
             }
         }
     }
@@ -292,30 +264,6 @@ public class Player : MonoBehaviour
         {
             bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
             bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
-        }
-    }
-
-    #endregion
-}
-
-[CreateAssetMenu(menuName = "Create Skill")]
-public class Skill : ScriptableObject
-{
-    public float cooldown;
-    public float currentCooldown;
-    public float manaCost;
-    public bool IsReady;
-    public bool IsBought;
-
-    public void Update()
-    {
-        if(IsReady.Equals(false))
-        {
-            currentCooldown -= Time.deltaTime;
-            if(currentCooldown < 0)
-            {
-                IsReady = true;
-            }
         }
     }
 }

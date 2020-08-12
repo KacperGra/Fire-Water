@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Multi Shoot
-  m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_Script: {fileID: 11500000, guid: 9bb4ed7c1bb87ef43987f4360d1ce977, type: 3}
+  m_Name: Mutli_Shoot
+  m_EditorClassIdentifier: 
+  manaCost: 30
   cooldown: 5
-  currentCooldown: 2.3932495
-  manaCost: 20
-  IsReady: 0
-  IsBought: 1
+  currentCooldown: 0
+  IsReady: 1

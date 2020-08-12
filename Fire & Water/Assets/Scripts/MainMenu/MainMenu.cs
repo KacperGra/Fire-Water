@@ -29,6 +29,10 @@ public class MainMenu : MonoBehaviour
             clickEffect.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
             clickEffect.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
         }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            StartCoroutine(EndGame());
+        }
     }
 
     public void StartGame()

@@ -20,14 +20,6 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        if(Application.platform == RuntimePlatform.Android)
-        {
-            androidMode = true;
-        }
-        else
-        {
-            androidMode = true;
-        }
         coinsNumber = 0;
         monsterNumber = 0;
         killedMonstersNumber = 0;
