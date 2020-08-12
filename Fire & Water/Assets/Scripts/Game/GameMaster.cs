@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour
 {
     public bool testMode;
-    public bool androidBuild;
-
+    public bool androidMode;
     [Header("UI")]
     public Text coinNumberText;
     [HideInInspector] public int coinsNumber;
@@ -21,6 +20,14 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
+        if(Application.platform == RuntimePlatform.Android)
+        {
+            androidMode = true;
+        }
+        else
+        {
+            androidMode = true;
+        }
         coinsNumber = 0;
         monsterNumber = 0;
         killedMonstersNumber = 0;

@@ -6,8 +6,8 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     #region Variables
-    private const int numberOfPlayers = 2;
-    private readonly Transform[] player = new Transform[numberOfPlayers];
+    private const int playersNumber = 1;
+    private readonly Transform[] player = new Transform[playersNumber];
     private Vector2 direction;
     [Header(header: "Details")]
     public string MonsterName;
@@ -128,7 +128,7 @@ public class Monster : MonoBehaviour
 
         // Script sets to players transform variables values
         var players = FindObjectsOfType<Player>();
-        for (int i = 0; i < numberOfPlayers; ++i)
+        for (int i = 0; i < playersNumber; ++i)
         {
             player[i] = players[i].transform;
         }
@@ -215,9 +215,9 @@ public class Monster : MonoBehaviour
     void SelectCloserTarget()
     {
         //  Calculate which target is closer and chose it as target
-        var heading = new Vector2[numberOfPlayers];
-        var distance = new float[numberOfPlayers];
-        for(int i = 0; i < numberOfPlayers; ++i) // Loop sets heading and distance for all players
+        var heading = new Vector2[playersNumber];
+        var distance = new float[playersNumber];
+        for(int i = 0; i < playersNumber; ++i) // Loop sets heading and distance for all players
         {
             heading[i] = transform.position - player[i].position;
             distance[i] = heading[i].magnitude;
@@ -225,7 +225,7 @@ public class Monster : MonoBehaviour
 
         var closerPlayerDistance = distance[0];
         var closerPlayerHeading = heading[0];
-        for(int i = 1; i < numberOfPlayers; ++i) // Script select closer target
+        for(int i = 1; i < playersNumber; ++i) // Script select closer target
         {
             if(closerPlayerDistance > distance[i])
             {

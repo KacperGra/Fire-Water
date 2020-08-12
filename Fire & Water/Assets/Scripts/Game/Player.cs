@@ -8,7 +8,10 @@ public class Player : MonoBehaviour
 {
     #region Variables
     private Animator animator;
+    [Header(header:"Android")]
+    public GameObject androidUI;
     public Joystick joystick;
+    public Text skill_1Text;
     [Header(header: "Details")]
     public string playerName;
     public float moveSpeed;
@@ -44,6 +47,11 @@ public class Player : MonoBehaviour
     #region Functions
     void Start()
     {
+        if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
+        {
+            androidUI.SetActive(false);
+        }
+
         health = maxHealth;
         mana = maxMana;
         manaBar.SetMaxValue(maxMana);
@@ -79,11 +87,21 @@ public class Player : MonoBehaviour
 
         ManaScript();
 
-        if(FindObjectOfType<GameMaster>().androidBuild.Equals(false))
+        if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
         {
             PC_PlayerInput();
             Animate();
         }
+
+        if(skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown > 0)
+        {
+            var cooldown = (Mathf.Ceil(skill[(int)SkillsIndex.MULTI_SHOOT].currentCooldown * 10f) / 10f);
+            skill_1Text.text = "Multi Shoot\n" + "Time: " + cooldown;
+        }
+        else
+        {
+            skill_1Text.text = "Multi Shoot\n" + "READY";
+        }    
         
 
         movementInput = new Vector2(Input.GetAxis(horizontalMoveName), Input.GetAxis(vericalMoveName));  
@@ -93,7 +111,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (FindObjectOfType<GameMaster>().androidBuild.Equals(true))
+        if (FindObjectOfType<GameMaster>().androidMode.Equals(true))
         {
             Android_PlayerInput();
             Animate();
@@ -154,7 +172,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
         }
 
         // Skill Input section ->
@@ -162,7 +180,7 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyUp(Q_Skill) && multiShoot.IsReady.Equals(true))
         {
-            UseSkill("Multi Shoot"); 
+            //UseSkill("Multi Shoot"); 
         }
     }
 
@@ -192,6 +210,10 @@ public class Player : MonoBehaviour
         else
         {
             movementInput.y = 0f;
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
         }
     }
 
@@ -232,13 +254,13 @@ public class Player : MonoBehaviour
 
     }  
 
-    public void UseSkill(string skillName)
+    public void UseSkill()
     {
         int skillIndex = 0;
-        if(skillName.Equals("Multi Shoot"))
+        /*if(skillName.Equals("Multi Shoot"))
         {
             skillIndex = (int)SkillsIndex.MULTI_SHOOT;
-        }
+        }*/
         if (skill[skillIndex].currentCooldown < 0)
         {
             if (mana - skill[skillIndex].manaCost >= 0)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Multi Shoot
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   cooldown: 5
-  currentCooldown: 0
+  currentCooldown: 2.3932495
   manaCost: 20
-  IsReady: 1
+  IsReady: 0
   IsBought: 1
