@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     [HideInInspector] public int health;
     private readonly int maxHealth = 6;
+
     public Bar manaBar;
     [HideInInspector] public float mana;
     private readonly float maxMana = 100f;
@@ -67,28 +68,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        var cooldownValue = Mathf.Round(skills[0].currentCooldown * 10f) / 10f;
-
-
-        if (skills[0].currentCooldown >= 0)
-        {
-            skills[0].currentCooldown -= Time.deltaTime;
-            skill_1Text.text = cooldownValue.ToString() + '|' + skills[0].cooldown;
-
-        }
-        else
-        {
-            skill_1Text.text = "READY!"; 
-        }
-
-
-        if(currentTimeToShoot < timeToShoot)
-        {
-            currentTimeToShoot += Time.deltaTime;
-        }
-        shootBar.SetValue(currentTimeToShoot);
-        
-
         ManaScript();
 
         if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
@@ -108,6 +87,29 @@ public class Player : MonoBehaviour
         
         
         gameObject.GetComponent<Rigidbody2D>().velocity *= new Vector2(0f, 0f);
+    }
+
+    void UI_Update()
+    {
+        var cooldownValue = Mathf.Round(skills[0].currentCooldown * 10f) / 10f;
+
+        if (skills[0].currentCooldown >= 0)
+        {
+            skills[0].currentCooldown -= Time.deltaTime;
+            skill_1Text.text = cooldownValue.ToString() + '|' + skills[0].cooldown;
+
+        }
+        else
+        {
+            skill_1Text.text = "READY!";
+        }
+
+
+        if (currentTimeToShoot < timeToShoot)
+        {
+            currentTimeToShoot += Time.deltaTime;
+        }
+        shootBar.SetValue(currentTimeToShoot);
     }
 
     private void FixedUpdate()
