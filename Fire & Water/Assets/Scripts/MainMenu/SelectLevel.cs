@@ -47,10 +47,6 @@ public class SelectLevel : MonoBehaviour
                     var sceneIndex = playerLevels.GetLevelIndex(PlayerLevels.LevelIndex.LEVEL_01);
                     StartCoroutine(LoadScene(sceneIndex));
                 }              
-                else
-                {
-
-                }
                 break;
         }
     }

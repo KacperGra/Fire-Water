@@ -21,11 +21,17 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        coinsNumber = 0;
+        LoadGame();
         monsterNumber = 0;
         killedMonstersNumber = 0;
         IgnoreCollisionsInit();
         shopWindow.SetActive(false);
+    }
+
+    private void LoadGame()
+    {
+        var data = SaveSystem.LoadPlayer();
+        coinsNumber = data.coinsNumber;
     }
 
     private void Update()

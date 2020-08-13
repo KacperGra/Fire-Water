@@ -181,6 +181,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SaveSystem.SavePlayer(FindObjectOfType<GameMaster>());
             SceneManager.LoadScene((int)LevelIndex.MAIN_MENU);
         }
 
