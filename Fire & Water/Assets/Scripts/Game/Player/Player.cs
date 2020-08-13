@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     [Header(header:"Android")]
     public GameObject androidUI;
     public Joystick joystick;
-    public Text skill_1Text;
+    public TMP_Text[] skillText = new TMP_Text[2];
     [Header(header: "Details")]
     public string playerName;
     public float moveSpeed;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
     private readonly float manaRegenValue = 0.5f;
     private readonly float timeManaRegen = 0.25f;
     private float currentTimeManaRegen = 0f;
-    public Text manaText;
+    public TMP_Text manaText;
 
     [Header(header: "Shooting")]    
     public Transform shootPoint;
@@ -45,14 +46,23 @@ public class Player : MonoBehaviour
     public List<Skill> skills = new List<Skill>();
 
     private PlayerSkills playerSkills;
-    private KeyCode Q_Skill;  
+    private KeyCode Q_Skill;
+
+    // Elemental ball
+    public GameObject elementalBallPrefab;
 
 
     void Start()
     {
+        for(int i = 0; i < skills.Count; ++i)
+        {
+            skills[i].currentCooldown = 0f;
+            skills[i].IsReady = true;
+        }
+
         playerSkills = new PlayerSkills();
         playerSkills.UnlockSkill(PlayerSkills.SkillType.MULTI_SHOOT);
-
+        playerSkills.UnlockSkill(PlayerSkills.SkillType.ELEMENTAL_BALL);
 
         if(FindObjectOfType<GameMaster>().androidMode.Equals(false))
         {
@@ -113,18 +123,21 @@ public class Player : MonoBehaviour
 
     void UI_Update()
     {
-        var cooldownValue = Mathf.Round(skills[0].currentCooldown * 10f) / 10f;
+        
 
-        if (skills[0].currentCooldown >= 0)
+        for(int i = 0; i < skills.Count; ++i)
         {
-            skills[0].currentCooldown -= Time.deltaTime;
-            skill_1Text.text = cooldownValue.ToString() + '|' + skills[0].cooldown;
-
-        }
-        else
-        {
-            skill_1Text.text = "READY!";
-        }
+            var cooldownValue = Mathf.Round(skills[i].currentCooldown * 10f) / 10f;
+            if (skills[i].currentCooldown >= 0)
+            {
+                skills[i].currentCooldown -= Time.deltaTime;
+                skillText[i].text = cooldownValue.ToString() + '|' + skills[i].cooldown;
+            }
+            else
+            {
+                skillText[i].text = "READY!";
+            }
+        }    
 
         if (currentTimeToShoot < timeToShoot)
         {
@@ -168,7 +181,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
+            SceneManager.LoadScene((int)LevelIndex.MAIN_MENU);
         }
 
 
@@ -196,12 +209,15 @@ public class Player : MonoBehaviour
             case "Multi Shoot":
                 UseSkill(PlayerSkills.SkillType.MULTI_SHOOT);
                 break;
+            case "Elemental ball":
+                UseSkill(PlayerSkills.SkillType.ELEMENTAL_BALL);
+                break;
         }
     }
 
     void UseSkill(PlayerSkills.SkillType _skillType)
     {
-        if(playerSkills.IsSkillUnlocked(_skillType))
+        if (playerSkills.IsSkillUnlocked(_skillType))
         {
             if(skills[(int)_skillType].IsReady.Equals(true))
             {
@@ -211,7 +227,15 @@ public class Player : MonoBehaviour
                     {
                         mana -= skills[(int)_skillType].manaCost;
                         skills[(int)_skillType].currentCooldown = skills[(int)_skillType].cooldown;
-                        MultiShoot();
+                        switch((int)_skillType)
+                        {
+                            case 0:
+                                MultiShoot();
+                                break;
+                            case 1:
+                                ElementalBall();  
+                                break;
+                        }
                     }
                     
                 }
@@ -239,5 +263,12 @@ public class Player : MonoBehaviour
             bullet[1].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, rotationValue));
             bullet[2].transform.rotation = Quaternion.Euler(new Vector3(0, -180f, -rotationValue));
         }
+    }
+
+    public void ElementalBall()
+    {
+        var elementalBall = Instantiate(elementalBallPrefab) as GameObject;
+        elementalBall.transform.position = shootPoint.position;
+        elementalBall.transform.rotation = transform.rotation;
     }
 }

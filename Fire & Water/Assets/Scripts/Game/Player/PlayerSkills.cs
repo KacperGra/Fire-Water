@@ -6,7 +6,8 @@ public class PlayerSkills : MonoBehaviour
 {
     public enum SkillType
     {
-        MULTI_SHOOT = 0
+        MULTI_SHOOT     = 0,
+        ELEMENTAL_BALL
     }
 
     private List<SkillType> unlockedSkillsType;

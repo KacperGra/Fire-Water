@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameMaster : MonoBehaviour
 {
     public bool testMode;
     public bool androidMode;
     [Header("UI")]
-    public Text coinNumberText;
+    public TMP_Text coinNumberText;
     [HideInInspector] public int coinsNumber;
-    public Text monsterNumberText;
+    public TMP_Text monsterNumberText;
     [HideInInspector] public int monsterNumber;
-    public Text killedMonstersNumberText;
+    public TMP_Text killedMonstersNumberText;
     [HideInInspector] public int killedMonstersNumber;
 
     public GameObject shopWindow;
@@ -78,6 +79,6 @@ public class GameMaster : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene((int)ScenesIndex.MAIN_MENU);
+        SceneManager.LoadScene((int)LevelIndex.MAIN_MENU);
     }
 }

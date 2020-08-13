@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(LoadScene((int)ScenesIndex.LEVEL_01));
+        StartCoroutine(LoadScene((int)LevelIndex.SELECT_LEVEL));
     }
 
     IEnumerator LoadScene(int _sceneIndex)

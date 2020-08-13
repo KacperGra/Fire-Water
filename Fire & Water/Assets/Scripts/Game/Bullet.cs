@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public string elementalName;
+    public string bulletName;
     [Header(header:"Movement")]
     private float moveSpeed = 15f;
     [HideInInspector] public float timeToDestroy = .75f;
+    public int health;
 
     [Header(header:"Particles")]
     // Fly particles
@@ -17,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        if(elementalName.Equals("Cowboy"))
+        if(bulletName.Equals("Cowboy"))
         {
             moveSpeed = 7.5f;
         }
@@ -37,16 +38,17 @@ public class Bullet : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().velocity = transform.right * moveSpeed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(!elementalName.Equals("Cowboy"))
+        if (!bulletName.Equals("Cowboy"))
         {
-            Monster monster = collision.collider.GetComponent<Monster>();
+
+            Monster monster = collision.GetComponent<Monster>();
             if (monster != null && monster.IsDead.Equals(false))
             {
-                Explosion();
-                if ((monster.elementalName.Equals("Water") && elementalName.Equals("Water")) || (monster.elementalName.Equals("Fire") && elementalName.Equals("Fire")) || monster.elementalName == "Both")
+                if ((monster.elementalName.Equals("Water") && bulletName.Equals("Water")) || (monster.elementalName.Equals("Fire") && bulletName.Equals("Fire")) || monster.elementalName == "Both")
                 {
+                    TakeDamage(1);
                     monster.TakeDamage(1);
                 }
                 else
@@ -55,26 +57,34 @@ public class Bullet : MonoBehaviour
                 }
                 monster.rigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
             }
-        } 
+        }
         else
         {
-            Player player = collision.collider.GetComponent<Player>();
-            if(player != null)
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
             {
                 Explosion();
                 player.TakeDamage();
             }
         }
-        
+    }
+
+    void TakeDamage(int _value)
+    {
+        health -= _value;
+        if(health <= 0)
+        {
+            Explosion();
+        }
     }
 
     void DecraseMovementSpeed()
     {
-        if (moveSpeed > 8f && !elementalName.Equals("Cowboy"))
+        if (moveSpeed > 8f && !bulletName.Equals("Cowboy"))
         {
             moveSpeed *= .99f;
         }
-        else if(moveSpeed > 3f && elementalName.Equals("Cowboy"))
+        else if(moveSpeed > 3f && bulletName.Equals("Cowboy"))
         {
             moveSpeed *= .99f;
         }

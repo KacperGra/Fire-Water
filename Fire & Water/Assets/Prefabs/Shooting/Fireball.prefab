@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6567308364541476461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.747, y: 0.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_Children:
   - {fileID: 2343796398375054076}
   - {fileID: 2343796399725811554}
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.08646399, y: 0.018914104}
@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa991e6e181cc4f4fb01818bcf196cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementalName: Fire
+  bulletName: Fireball
   timeToDestroy: 0.75
+  health: 3
   particles: {fileID: 959860881312349806, guid: ef5c8518c7da58a408b13af6d6012af1,
     type: 3}
   destroyParticles: {fileID: 3330359018407317835, guid: c6e38c4ed3379c449a3b094cd1717eae,

@@ -99,8 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa991e6e181cc4f4fb01818bcf196cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementalName: Cowboy
+  bulletName: Cowboy
   timeToDestroy: 0.75
+  health: 1
   particles: {fileID: 2925138477918749731, guid: b5872d6b789e2044ea7f79d5429d02fb,
     type: 3}
   destroyParticles: {fileID: 1127028176514991774, guid: 8423ff9d4a12dfc4497d8b8e63560b4b,
@@ -155,7 +156,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

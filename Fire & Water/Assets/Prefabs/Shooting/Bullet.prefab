@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa991e6e181cc4f4fb01818bcf196cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementalName: Fire
+  bulletName: Fire
   timeToDestroy: 0.75
+  health: 1
   particles: {fileID: 959860881312349806, guid: ef5c8518c7da58a408b13af6d6012af1,
     type: 3}
   destroyParticles: {fileID: 3330359018407317835, guid: c6e38c4ed3379c449a3b094cd1717eae,
@@ -156,7 +157,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
